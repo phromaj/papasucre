@@ -1,8 +1,5 @@
 from fastapi import FastAPI
-from pydantic import BaseModel, Field
 import pymongo
-from bson import ObjectId
-from typing import Optional
 from models import user
 app = FastAPI()
 client = pymongo.MongoClient(
