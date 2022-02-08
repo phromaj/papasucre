@@ -1,12 +1,9 @@
-from bson import ObjectId
 from typing import Optional, List
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 from datetime import datetime
-from models import pyObjectId
 
 
 class UserModel(BaseModel):
-    id: Optional[pyObjectId.PyObjectId] = Field(alias='_id')
     name: str
     username: str
     email: str
@@ -25,11 +22,5 @@ class UserModel(BaseModel):
     has_subscription: bool
     photo_album: List[str]
     profile_picture: str
-    disliked_userlist: List[str]
-    liked_userlist: List [str]
-
-    class Config:
-        arbitrary_types_allowed = True
-        json_encoders = {
-            ObjectId: str
-        }
+    disliked_user_list: List[str]
+    liked_user_list: List[str]
