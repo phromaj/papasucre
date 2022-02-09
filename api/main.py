@@ -24,7 +24,7 @@ def list_users():
 
 
 @app.get("/users/{email}", response_description="Get a single user", response_model=userModel.User)
-def show_student(email: str):
+def show_user(email: str):
     if (user := db.users.find_one({"email": email})) is not None:
         return user
     raise HTTPException(status_code=404, detail=f"User with {email} not found")
@@ -37,7 +37,7 @@ def create_user(user: userModel.User):
 
 
 @app.put('/users/{email}', response_description="Update a user", response_model=userModel.UpdateUser)
-def update_student(email: str, user: userModel.UpdateUser):
+def update_user(email: str, user: userModel.UpdateUser):
     user = {k: v for k, v in user.dict().items() if v is not None}
 
     if len(user) >= 1:
