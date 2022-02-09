@@ -1,113 +1,114 @@
-<script setup lang="ts">
-import { RouterLink, RouterView } from "vue-router";
-import HelloWorld from "./components/HelloWorld.vue";
-import { Icon } from '@iconify/vue';
-</script>
-
 <template>
   <div class="firstPage">
-      <img id="logo" src="./assets/papasucre.png" alt="papasucre-logo">
+    <img id="logo" src="../assets/papasucre.png" alt="papasucre-logo" />
     <div class="buttonDiv">
       <div class="signUp">
-        <RouterLink to="/" tag="login"><button><Icon class="icon" icon="tabler:login" width="30" height="30" rotate="2"/>Se Connecter</button></RouterLink>
+        <RouterLink to="/" tag="login">
+          <button>
+            <Icon class="icon" icon="tabler:login" width="30" height="30" rotate="2" />Se Connecter
+          </button>
+        </RouterLink>
       </div>
       <div class="signIn">
-        <RouterLink to="/" tag="signin"><button><Icon class="icon" icon="akar-icons:google-fill" width="25" height="25" />S'inscrire avec Google</button></RouterLink>
-        <RouterLink to="/" tag="signin"><button><Icon class="icon" icon="bi:facebook" width="25" height="25" />S'inscrire avec Facebook</button></RouterLink>
-        <RouterLink to="/signin" tag="signin"><button><Icon class="icon" icon="ci:message-circle" width="28" height="28" />S'inscrire avec N° de tél.</button></RouterLink>
+        <RouterLink to="/" tag="signin">
+          <button>
+            <Icon class="icon" icon="akar-icons:google-fill" width="25" height="25" />S'inscrire avec Google
+          </button>
+        </RouterLink>
+        <RouterLink to="/" tag="signin">
+          <button>
+            <Icon class="icon" icon="bi:facebook" width="25" height="25" />S'inscrire avec Facebook
+          </button>
+        </RouterLink>
+        <RouterLink to="/signin" tag="signin">
+          <button>
+            <Icon class="icon" icon="ci:message-circle" width="28" height="28" />S'inscrire avec N° de tél.
+          </button>
+        </RouterLink>
       </div>
     </div>
   </div>
-  <RouterView/>
-  </template>
+</template>
+<script>
+export default {
 
-<style>
-@import "@/assets/base.css";
-
-body {
-  background: linear-gradient(#472709, #241303);
-  background-repeat: no-repeat;
-  background-position: fixed;
-  width: 100%;
-  display: flex;
-  justify-content: center;
 }
-
+</script>
+<style scoped>
 .firstPage {
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  }
+}
 
-  #logo {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
+#logo {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
 
-  img {
-    width: 30em;
-  }
-  
-  a{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    text-decoration: none;
-  }
-  
-  a.RouterLink, button {
-    text-decoration: none;
-    border: 1px solid #fff;
-    border-radius: 20px;
-    width: 18em;
-    height: 2.5em;
-    background-color: #fff;
-    font-size: 1.1em;
-    line-height: 1.7em;
-  }
+img {
+  width: 30em;
+}
 
-  .login {
-    float: left;
-    line-height: 2em;
-    width: 40%;
-  }
-  
-  .buttonDiv {
-    margin-top: 2em;
-  }
+a {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+}
 
-  .signUp {
-    display: flex;
-    justify-content: center;
-    height: 7em;
-  }
+a.RouterLink,
+button {
+  text-decoration: none;
+  border: 1px solid #fff;
+  border-radius: 20px;
+  width: 18em;
+  height: 2.5em;
+  background-color: #fff;
+  font-size: 1.1em;
+  line-height: 1.7em;
+}
 
-  .signIn {
-    display: grid;
-    place-items: center;
-    gap: 1.5em;
-  }
+.login {
+  float: left;
+  line-height: 2em;
+  width: 40%;
+}
 
-  .icon {
-    float: left;
-    size: 2em;
-    }
-  
+.buttonDiv {
+  margin-top: 2em;
+}
+
+.signUp {
+  display: flex;
+  justify-content: center;
+  height: 7em;
+}
+
+.signIn {
+  display: grid;
+  place-items: center;
+  gap: 1.5em;
+}
+
+.icon {
+  float: left;
+  size: 2em;
+}
 
 @media (min-width: 320px) and (max-width: 1000px) {
-  
   body {
     display: flex;
     place-items: center;
     width: 100%;
-   }
+  }
 
   .firstPage {
-  width: 100%;
+    width: 100%;
   }
-  
+
   #logo {
     width: 22em;
   }
@@ -122,8 +123,9 @@ body {
     justify-content: center;
     text-decoration: none;
   }
-  
-  a.RouterLink, button {
+
+  a.RouterLink,
+  button {
     text-decoration: none;
     border: 1px solid #fff;
     border-radius: 20px;
@@ -146,7 +148,7 @@ body {
     line-height: 2em;
     width: 40%;
   }
-  
+
   .buttonDiv {
     display: row;
   }
@@ -166,18 +168,17 @@ body {
   .icon {
     float: left;
     size: 2em;
-    }
-  
   }
+}
 
 @media (max-width: 320px) {
-  
   #logo {
     width: 15em;
     margin-top: 2em;
   }
 
-  a.RouterLink, button {
+  a.RouterLink,
+  button {
     text-decoration: none;
     border: 1px solid #fff;
     border-radius: 20px;
