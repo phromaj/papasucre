@@ -16,7 +16,7 @@ import { RouterLink, RouterView } from "vue-router";
         </RouterLink>
       </div>
       <div class="signIn">
-        <RouterLink to="/" tag="signup">
+        <RouterLink to="/signup" tag="signup">
           <button>
             <Icon class="icon" icon="akar-icons:google-fill" width="25" height="25" />S'inscrire avec Google
           </button>
@@ -26,7 +26,7 @@ import { RouterLink, RouterView } from "vue-router";
             <Icon class="icon" icon="bi:facebook" width="25" height="25" />S'inscrire avec Facebook
           </button>
         </RouterLink>
-        <RouterLink to="/signup" tag="signup">
+        <RouterLink to="/" tag="signin">
           <button>
             <Icon class="icon" icon="ci:message-circle" width="28" height="28" />S'inscrire avec N° de tél.
           </button>
@@ -53,6 +53,8 @@ export default {
   width: 100%;
   display: flex;
   justify-content: center;
+  margin-bottom: 5rem;
+
 }
 
 a {
@@ -87,7 +89,7 @@ button {
 .signUp {
   display: flex;
   justify-content: center;
-  height: 7em;
+  margin-bottom: 5em;
 }
 
 .signIn {
@@ -114,7 +116,7 @@ button {
 
   #logo {
     width: 18em;
-    margin: 2em auto 0 auto;
+    margin: 3rem auto 3rem auto;
   }
 
   .buttonDiv {
@@ -153,6 +155,10 @@ button {
     width: 40%;
   }
 
+  button {
+    cursor: pointer;
+  }
+
   .buttonDiv {
     display: row;
   }
@@ -160,7 +166,7 @@ button {
   .signUp {
     display: flex;
     justify-content: center;
-    height: 7em;
+    margin-bottom: 5em;
   }
 
   .signIn {
@@ -254,7 +260,7 @@ nav a:first-of-type {
   }
 
   .logo {
-    margin: 0 2rem 0 0;
+    margin: 0 5rem 0 0;
   }
 
   nav {

@@ -13,17 +13,17 @@ class User(BaseModel):
     age: int
     job: str
     description: Optional[str] = None
-    interests: List[str]
+    interests: Optional[List[str]] = None
     phone_number: str
-    first_name: str
-    last_name: str
+    first_name: Optional[str]
+    last_name: Optional[str]
     sex: str
-    is_verified: bool
-    has_subscription: bool
-    photo_album: List[str]
-    profile_picture: str
-    disliked_user_list: List[str]
-    liked_user_list: List[str]
+    is_verified: Optional[bool] = None
+    has_subscription: Optional[bool] = None
+    photo_album: Optional[List[str]] = None
+    profile_picture: Optional[str] = None
+    disliked_user_list: Optional[List[str]] = None
+    liked_user_list: Optional[List[str]] = None
 
     class Config:
         allow_population_by_field_name = True
