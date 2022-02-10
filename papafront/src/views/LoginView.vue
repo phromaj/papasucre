@@ -9,24 +9,24 @@ import { RouterLink, RouterView } from "vue-router";
     <img id="logo" src="../assets/papasucre.png" alt="papasucre-logo" />
     <div class="buttonDiv">
       <div class="signUp">
-        <RouterLink to="/" tag="login">
+        <RouterLink to="/signin" tag="signin">
           <button>
             <Icon class="icon" icon="tabler:login" width="30" height="30" rotate="2" />Se Connecter
           </button>
         </RouterLink>
       </div>
       <div class="signIn">
-        <RouterLink to="/" tag="signin">
+        <RouterLink to="/" tag="signup">
           <button>
             <Icon class="icon" icon="akar-icons:google-fill" width="25" height="25" />S'inscrire avec Google
           </button>
         </RouterLink>
-        <RouterLink to="/" tag="signin">
+        <RouterLink to="/" tag="signup">
           <button>
             <Icon class="icon" icon="bi:facebook" width="25" height="25" />S'inscrire avec Facebook
           </button>
         </RouterLink>
-        <RouterLink to="/signin" tag="signin">
+        <RouterLink to="/signup" tag="signup">
           <button>
             <Icon class="icon" icon="ci:message-circle" width="28" height="28" />S'inscrire avec N° de tél.
           </button>
