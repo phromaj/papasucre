@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue';
+import { RouterLink, RouterView } from "vue-router";
 </script>
 
 <template>
@@ -12,24 +13,41 @@ import { Icon } from '@iconify/vue';
         <div id="title">
           <H1>Mes informations</H1>
         </div>
-        <input type="text" placeholder="Nom Prénom">
-        <p>Voici comment il apparaîtra sur PapaSucré. Attention, tu ne pourras pas le modifier</p>
-        <div id="gender">
-          <H1>Je suis un-e</H1>
-          <div class="selectGender">
-            <button id="male">
-              <Icon icon="mdi:gender-male" color="#2d2d2d" />
-            </button>
-            <button id="female">
-              <Icon icon="carbon:gender-female" color="#2d2d2d" />
-            </button>
+        <form action="">
+          <input type="text" maxlength="30" placeholder="Nom Prénom">
+          <p>Voici comment il apparaîtra sur PapaSucré. Attention, tu ne pourras pas le modifier.</p>
+          <div id="gender">
+            <H1>Je suis un-e</H1>
+            <div class="selectGender">
+              <button id="male">
+                <Icon class="genderIcon" icon="mdi:gender-male" color="#2d2d2d" width="32" height="32" />
+              </button>
+              <button id="female">
+                <Icon class="genderIcon" icon="mdi:gender-female" color="#2d2d2d" width="32" height="32" />
+              </button>
+            </div>
           </div>
-        </div>
+          <div id="birth">
+            <div id="birthTitle">
+              <h1>Date de naissance</h1>
+            </div>
+            <span class="datepicker-toggle">
+              <span class="datepicker-toggle-button"></span>
+              <input type="date" class="datepicker-input">
+            </span>
+            <p>Votre âge sera visible par tous.</p>
+          </div>
+          <div id="continueButton">
+            <RouterLink to="/verification" tag="continue">
+              <button id="continue">
+                <Icon class="icon" icon="" width="20" height="20" rotate="2"/>Continuer
+              </button>
+            </RouterLink>
+          </div>
+        </form>
       </div>
-
     </div>
   </body>
-  
 </template>
 
 <style>
@@ -45,11 +63,15 @@ body {
 #title {
   width: 25%;
   color: rgb(255, 255, 255);
-  height: 7em;
+  height: 6em;
+  line-height: 1.2;
+  font-size: 18px;
 }
 #information{
   width: 100%;
+  padding-top: 30%;
   padding-left: 5%;
+  padding-right: 5%;
   color: rgb(255, 255, 255);
 }
 input{
@@ -69,22 +91,25 @@ input:focus{
   outline: none;
 }
 p{
-  width: 70%;
+  width: 85%;
   color: #8D8D8D;
   padding-top: 2%;
 }
 #gender{
-  width: 50%;
+  width: 100%;
   color: rgb(255, 255, 255);
-  height: 7em;
-  padding-top: 3%
+  height: 10em;
+  padding-top: 4%;
+  
 }
 .selectGender{
   width: 100%;
-  padding-left: 10%;
+  padding-top: 6%;
   
   display: flex;
+  justify-content: center;
   justify-content: space-evenly;
+  
 }
 #male, #female{
   width: 5em;
@@ -92,20 +117,76 @@ p{
   border-radius: 100%;
   background-color: white;
   border: 3px solid #713A0B;
+  justify-content: space-evenly;
+}
 
+#birth {
+  padding-top: 6%;
+  width: 100%;
+}
+#birthTitle {
+  width: 45%;
+  color: rgb(255, 255, 255);
+  height: 7em;
+}
+
+.datepicker-input {
+  position: absolute;
+  width: 100%;
+  height: 2em;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.datepicker-toggle {
+  display: inline-block;
+  position: relative;
+  width: 70%;
+  height: 2em;
+}
+.datepicker-toggle-button {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: url('https://api.iconify.design/bx/bx-calendar.svg?color=white') no-repeat right center / contain;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+#continueButton{
+  width: 100%;
+  padding-top: 8%;
+  padding-bottom: 8%;
+  display: flex;
+  justify-content: center;
+
+}
+a.RouterLink, #continue {
+  text-decoration: none;
+  border: 1px solid #fff;
+  border-radius: 20px;
+  width: 100%;
+  height: 1.6em;
+  background-color: #fff;
+  font-size: 1.1em;
+  
 }
 
 #logo{
-  width: 100%;
   height: 8em;
   display: flex;
   justify-content: right;
+  float: right;
 }
-img{
-  padding-right: 10%;
-  width: 10em;
-  height: 8em;
-}
+
 @media (min-width: 1024px) {
   .signin {
     width: 100%;
