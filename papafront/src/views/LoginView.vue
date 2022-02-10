@@ -55,10 +55,6 @@ export default {
   justify-content: center;
 }
 
-img {
-  width: 30em;
-}
-
 a {
   width: 100%;
   display: flex;
@@ -117,7 +113,8 @@ button {
   }
 
   #logo {
-    width: 22em;
+    width: 18em;
+    margin: 2em auto 0 auto;
   }
 
   .buttonDiv {
