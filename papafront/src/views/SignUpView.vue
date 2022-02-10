@@ -15,17 +15,14 @@ import { RouterLink, RouterView } from "vue-router";
           <h1>Mes informations</h1>
         </div>
         <form @submit.prevent="submitForm">
-          <input type="text" maxlength="30" placeholder="Nom Prénom">
+          <input class="text-input" v-model="full_name" type="text" maxlength="30" placeholder="Nom Prénom">
           <p>Voici comment il apparaîtra sur PapaSucré. Attention, tu ne pourras pas le modifier.</p>
           <div id="gender">
             <h2>Je suis un-e</h2>
             <div class="selectGender">
-              <button id="male">
-                <Icon class="genderIcon" icon="mdi:gender-male" color="#2d2d2d" width="32" height="32" />
-              </button>
-              <button id="female">
-                <Icon class="genderIcon" icon="mdi:gender-female" color="#2d2d2d" width="32" height="32" />
-              </button>
+              <input type="button" @click="getButtonValue" value="male" id="male" autocomplete="off">
+              <input type="button" @click="getButtonValue" value="female" id="female">
+                <!--<Icon  value="female" class="genderIcon" icon="mdi:gender-female" color="#2d2d2d" width="32" height="32" />-->
             </div>
           </div>
           <div id="birth">
@@ -34,16 +31,14 @@ import { RouterLink, RouterView } from "vue-router";
             </div>
             <span class="datepicker-toggle">
               <span class="datepicker-toggle-button"></span>
-              <input type="date" class="datepicker-input">
+              <input type="date" class="datepicker-input" v-model="user_birthdate">
             </span>
             <p>Votre âge sera visible par tous.</p>
           </div>
           <div id="continueButton">
-            <RouterLink to="/verification" tag="continue">
-              <button id="continue">
+              <button type="submit" id="continue">
                 <Icon class="icon" icon="" width="20" height="20" rotate="2"/><span>Continuer</span>
               </button>
-            </RouterLink>
           </div>
         </form>
       </div>
@@ -56,25 +51,44 @@ import { RouterLink, RouterView } from "vue-router";
 export default {
   data() {
     return {
-      username: '',
+      full_name: '',
       email: '',
       password: '',
+      gender: '',
+      user_birthdate: '',
     }
   },
   methods: {
+    getButtonValue(event){
+
+      this.gender = event.target.value
+    }, 
+    getDate(){
+
+    },
     // submit the form to our backend api
     async submitForm() {
-      const res = await fetch('/backend-api', {
+
+      const res = await fetch('http://127.0.0.1:8000/users', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
 
         // pass in the information from our form
         body: JSON.stringify({
-          username: this.username,
-          email: this.email,
-          password: this.password,
+          name: this.full_name,
+          username: "string",
+          email: "string",
+          password: "string",
+          location: "string",
+          birth_date: new Date(this.user_birthdate),
+          age: 0,
+          job: "string",
+          phone_number: "string",
+          sex: this.gender,
+          
         }) 
       });
+
     } 
   }
 }  
@@ -98,6 +112,10 @@ body {
   line-height: 1.2;
   font-size: 18px;
 }
+input[type="button"]{
+  cursor: pointer;
+  color: transparent;
+}
 #information{
   width: 100%;
   padding-top: 10px;
@@ -105,7 +123,7 @@ body {
   padding-right: 8%;
   color: rgb(255, 255, 255);
 }
-input{
+.text-input{
   background-color: transparent;
   border: 1px solid transparent;
   border-bottom: 2px solid rgb(255, 255, 255);
@@ -114,11 +132,11 @@ input{
   color: white;
   font-size: 1.5em;
 }
-input::placeholder{
+.text-input::placeholder{
   color: white;
   font-size: 1em;
 }
-input:focus{
+.text-input:focus{
   outline: none;
 }
 p{
@@ -153,6 +171,20 @@ h2{
   background-color: white;
   border: 3px solid #713A0B;
   justify-content: space-evenly;
+}
+
+#male {
+  background-color: #FFFF;
+  background-image: url('https://api.iconify.design/bi/gender-male.svg?width=24&height=24');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+#female {
+  background-color: #FFFF;
+  background-image:  url('https://api.iconify.design/bi/gender-female.svg?width=24&height=24');
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 #birth {
@@ -193,6 +225,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   width: 100%;
   margin: 0;
   padding: 0;
+  cursor: pointer;
+}
+
+button{
   cursor: pointer;
 }
 
