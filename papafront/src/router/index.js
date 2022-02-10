@@ -6,8 +6,8 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      name: "home",
-      component: HomeView,
+      name: "login",
+      component: () => import("../views/LoginView.vue"),
     },
     {
       path: "/about",
@@ -18,11 +18,6 @@ const router = createRouter({
       component: () => import("../views/AboutView.vue"),
     },
     {
-      path: "/login",
-      name: "login",
-      component: () => import("../views/LoginView.vue"),
-    },
-    {
       path: "/feed",
       name: "feed",
       component: () => import("../views/FeedView.vue"),
@@ -30,13 +25,18 @@ const router = createRouter({
     {
       path: "/signup",
       name: "signup",
-      component: () => import("../views/SignUpView.vue")
+      component: () => import("../views/SignUpView.vue"),
     },
     {
       path: "/signupinfo",
       name: "signupinfo",
       component: () => import("../views/SignUpInfoView.vue")
     },
+    {
+      path: "/signin",
+      name: "signin",
+      component: () => import("../views/SignInView.vue"),
+    }
   ],
 });
 
