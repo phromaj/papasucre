@@ -40,7 +40,7 @@ import { RouterLink, RouterView } from "vue-router";
           <div id="continueButton">
             <RouterLink to="/verification" tag="continue">
               <button id="continue">
-                <Icon class="icon" icon="" width="20" height="20" rotate="2"/>Continuer
+                <Icon class="icon" icon="" width="20" height="20" rotate="2"/><span>Continuer</span>
               </button>
             </RouterLink>
           </div>
@@ -169,18 +169,21 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   justify-content: center;
 
 }
-a.RouterLink, #continue {
+/*  Continue Button  */
+#continue{
   text-decoration: none;
   border: 1px solid #fff;
   border-radius: 20px;
-  width: 100%;
-  height: 1.6em;
+  width: 18em;
+  height: 2.5em;
   background-color: #fff;
   font-size: 1.1em;
+  line-height: 1.7em;
   
 }
-
 #logo{
+  padding-top: 5%;
+  padding-right: 5%;
   height: 8em;
   display: flex;
   justify-content: right;
