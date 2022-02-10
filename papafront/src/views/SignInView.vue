@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { Icon } from '@iconify/vue';
 import { RouterLink, RouterView } from "vue-router";
 </script>

@@ -1,3 +1,9 @@
+<script setup>
+import { Icon } from '@iconify/vue';
+import { RouterLink, RouterView } from "vue-router";
+
+</script>
+
 <template>
   <div class="firstPage">
     <img id="logo" src="../assets/papasucre.png" alt="papasucre-logo" />
@@ -30,6 +36,7 @@
   </div>
 </template>
 <script>
+
 export default {
 
 }
