@@ -81,7 +81,7 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
 .signin{
   width: 100%;
 }
@@ -100,9 +100,9 @@ body {
 }
 #information{
   width: 100%;
-  padding-top: 30%;
-  padding-left: 5%;
-  padding-right: 5%;
+  padding-top: 10px;
+  padding-left: 8%;
+  padding-right: 8%;
   color: rgb(255, 255, 255);
 }
 input{
@@ -147,8 +147,8 @@ h2{
   
 }
 #male, #female{
-  width: 5em;
-  height: 5em;
+  width: 6em;
+  height: 6em;
   border-radius: 100%;
   background-color: white;
   border: 3px solid #713A0B;
@@ -158,11 +158,11 @@ h2{
 #birth {
   padding-top: 6%;
   width: 100%;
+  padding-bottom: 2px;
 }
 #birthTitle {
   width: 45%;
   color: rgb(255, 255, 255);
-  height: 7em;
 }
 
 .datepicker-input {
@@ -216,16 +216,22 @@ a.RouterLink, #continue {
 }
 
 #logo{
-  height: 8em;
+  width: 100%;
+  margin-top: 1rem;
   display: flex;
-  justify-content: right;
-  float: right;
+  justify-content: flex-end;
+}
+img {
+  width: 70px;
+  height: 70px;
+  margin-right: 1rem;
+
+  object-fit: cover;
 }
 
 @media (min-width: 1024px) {
   .signin {
     width: 100%;
-    min-height: 100vh;
     display: flex;
     align-items: center;
   }
