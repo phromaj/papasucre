@@ -26,7 +26,7 @@ import { RouterLink, RouterView } from "vue-router";
             <Icon class="icon" icon="bi:facebook" width="25" height="25" />S'inscrire avec Facebook
           </button>
         </RouterLink>
-        <RouterLink to="/signin" tag="signin">
+        <RouterLink to="/signup" tag="signin">
           <button>
             <Icon class="icon" icon="ci:message-circle" width="28" height="28" />S'inscrire avec N° de tél.
           </button>
