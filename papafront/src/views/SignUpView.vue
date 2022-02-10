@@ -1,5 +1,6 @@
 <script setup>
 import { Icon } from '@iconify/vue';
+
 import { RouterLink, RouterView } from "vue-router";
 </script>
 
@@ -11,13 +12,13 @@ import { RouterLink, RouterView } from "vue-router";
       </div>
       <div id="information" >
         <div id="title">
-          <H1>Mes informations</H1>
+          <h1>Mes informations</h1>
         </div>
-        <form action="">
+        <form @submit.prevent="submitForm">
           <input type="text" maxlength="30" placeholder="Nom Prénom">
           <p>Voici comment il apparaîtra sur PapaSucré. Attention, tu ne pourras pas le modifier.</p>
           <div id="gender">
-            <H1>Je suis un-e</H1>
+            <h2>Je suis un-e</h2>
             <div class="selectGender">
               <button id="male">
                 <Icon class="genderIcon" icon="mdi:gender-male" color="#2d2d2d" width="32" height="32" />
@@ -29,7 +30,7 @@ import { RouterLink, RouterView } from "vue-router";
           </div>
           <div id="birth">
             <div id="birthTitle">
-              <h1>Date de naissance</h1>
+              <h2>Date d'anniversaire</h2>
             </div>
             <span class="datepicker-toggle">
               <span class="datepicker-toggle-button"></span>
@@ -49,6 +50,36 @@ import { RouterLink, RouterView } from "vue-router";
     </div>
   </body>
 </template>
+
+<script>
+
+export default {
+  data() {
+    return {
+      username: '',
+      email: '',
+      password: '',
+    }
+  },
+  methods: {
+    // submit the form to our backend api
+    async submitForm() {
+      const res = await fetch('/backend-api', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+
+        // pass in the information from our form
+        body: JSON.stringify({
+          username: this.username,
+          email: this.email,
+          password: this.password,
+        }) 
+      });
+    } 
+  }
+}  
+
+</script>
 
 <style>
 .signin{
@@ -101,6 +132,10 @@ p{
   height: 10em;
   padding-top: 4%;
   
+}
+h2{
+  font-size: 24px;
+  line-height: 1.3em;
 }
 .selectGender{
   width: 100%;
