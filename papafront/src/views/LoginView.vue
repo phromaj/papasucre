@@ -50,11 +50,8 @@ export default {
 }
 
 #logo {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 5rem;
-
+  width: 17em;
+  margin: 2em auto;
 }
 
 a {
@@ -115,8 +112,8 @@ button {
   }
 
   #logo {
-    width: 18em;
-    margin: 3rem auto 3rem auto;
+    width: 17em;
+    margin: 2rem auto;
   }
 
   .buttonDiv {
