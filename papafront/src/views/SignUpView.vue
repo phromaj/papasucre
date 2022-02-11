@@ -199,10 +199,19 @@ h2{
 
 .datepicker-input {
   position: absolute;
-  width: 100%;
-  height: 2em;
   cursor: pointer;
   box-sizing: border-box;
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-bottom: 2px solid rgb(255, 255, 255);
+  width: 80%;
+  height: 2em;
+  color: white;
+  font-size: 1.2em;
+}
+
+.datepicker-input:focus{
+  outline: none;
 }
 
 .datepicker-toggle {
