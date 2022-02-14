@@ -1,14 +1,20 @@
 <template lang="">
   <div>
     <Header />
+    <Tinder />
+
   </div>
 </template>
 <script>
-import Header from "@/components/Header.vue";
+import Tinder from "@/components/TinderComponent.vue"
+import Header from "@/components/HeaderComponent.vue"
+
+
 export default {
   name: "FeedView",
   components: {
-    Header,
+    Tinder,
+    Header
   },
 };
 </script>
