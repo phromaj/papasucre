@@ -36,9 +36,7 @@ import { RouterLink, RouterView } from "vue-router";
             <p>Votre âge sera visible par tous.</p>
           </div>
           <div id="continueButton">
-              <button type="submit" id="continue">
-                <Icon class="icon" icon="" width="20" height="20" rotate="2"/><span>Continuer</span>
-              </button>
+              <button type="submit" id="continue"></button>
           </div>
         </form>
       </div>

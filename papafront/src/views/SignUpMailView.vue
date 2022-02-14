@@ -1,8 +1,3 @@
-<script setup>
-import { Icon } from "@iconify/vue";
-
-import { RouterLink, RouterView } from "vue-router";
-</script>
 <template>
 <div>
     <body>
@@ -17,23 +12,54 @@ import { RouterLink, RouterView } from "vue-router";
                         <div class="mailTitle">
                             <h2>Saisissez votre mail</h2>
                         </div>
-                        <input v-model="email"  type="text" maxlength="30" placeholder="mail@exemple.com" />
+
+                        <input
+                            v-model="email"
+                            type="text"
+                            maxlength="30"
+                            placeholder="mail@exemple.com"
+                        />
                     </div>
+                    <small
+                        class="error"
+                        v-for="(error, index) of v$.email.$errors"
+                        :key="index"
+                    >{{ error.$message }}</small>
+
                     <div class="password">
                         <div class="passwordTitle">
                             <h3>Saisissez votre mot de passe</h3>
                         </div>
-                        <input v-model="password" type="text" maxlength="30" placeholder="Entrez votre mot de passe" />
+                        <input
+                            v-model="password"
+                            type="text"
+                            maxlength="30"
+                            placeholder="Entrez votre mot de passe"
+                        />
                     </div>
+                    <small
+                        class="error"
+                        v-for="(error, index) of v$.password.$errors"
+                        :key="index"
+                    >{{ error.$message }}</small>
                     <div class="verifPassword">
                         <div class="verifPasswordTitle">
                             <h4>Vérifiez votre mot de passe</h4>
                         </div>
-                        <input v-model="password_verif" type="text" maxlength="30" placeholder="Entrez votre mot de passe" />
+                        <input
+                            v-model="password_verif"
+                            type="text"
+                            maxlength="30"
+                            placeholder="Entrez votre mot de passe"
+                        />
                     </div>
+                    <small
+                        class="error"
+                        v-for="(error, index) of v$.password_verif.$errors"
+                        :key="index"
+                    >{{ error.$message }}</small>
                     <div class="continueButton">
                         <button type="submit" class="continue">
-                            <Icon class="icon" icon width="20" height="20" rotate="2" />
                             <span>Continuer</span>
                         </button>
                     </div>
@@ -44,24 +70,38 @@ import { RouterLink, RouterView } from "vue-router";
 </div>
 </template>
 <script>
+import useVuelidate from "@vuelidate/core";
+import { required, email, sameAs, minLength } from "@vuelidate/validators";
+import { RouterLink, RouterView } from "vue-router";
+
 export default {
+    setup() {
+        return { v$: useVuelidate() };
+    },
     data() {
         return {
-            email: '',
-            password: '',
-            password_verif: '', 
-            
+            email: "",
+            password: "",
+            password_verif: "",
         };
     },
     methods: {
         // submit the form to our backend api
         async submitForm() {
-            console.log(this.email)
-            console.log(this.password)
-            console.log(this.password_verif)
+            console.log(this.email);
+            console.log(this.password);
+            console.log(this.password_verif);
+            this.v$.$touch();
+            if (this.v$.$error) return;
             this.$router.push("/signup-info");
-
         },
+    },
+    validations() {
+        return {
+            email: { required, email }, // Matches this.firstName
+            password: { required, minLength: minLength(6) },
+            password_verif: { sameAsPassword: sameAs(this.password) } // Matches this.lastName
+        };
     },
 };
 </script>
