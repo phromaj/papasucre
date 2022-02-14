@@ -75,11 +75,16 @@
 <script>
 import useVuelidate from "@vuelidate/core";
 import { required, email, sameAs, minLength } from "@vuelidate/validators";
-import { RouterLink, RouterView } from "vue-router";
+import { useSignUpForm } from "../stores/signupform";
 
 export default {
   setup() {
-    return { v$: useVuelidate() };
+    // instancie le store
+    const store = useSignUpForm();
+    return {
+      v$: useVuelidate(),
+      store,
+    };
   },
   data() {
     return {
@@ -90,12 +95,16 @@ export default {
   },
   methods: {
     // submit the form to our backend api
-    async submitForm() {
-      console.log(this.email);
-      console.log(this.password);
-      console.log(this.password_verif);
+    submitForm() {
       this.v$.$touch();
       if (this.v$.$error) return;
+      // complète l'utilisateur dans le store au fur et au mesure
+      this.store.$patch((state) => {
+        (state.email = this.email), (state.password = this.password);
+      });
+      console.log(this.store.$state);
+      // methode pour poster un utilisateur dans l'api
+      this.store.postUser();
       this.$router.push("/signup-info");
     },
   },

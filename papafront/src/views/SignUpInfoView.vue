@@ -1,7 +1,5 @@
 <script setup>
-import { Icon } from "@iconify/vue";
 
-import { RouterLink, RouterView } from "vue-router";
 </script>
 
 <template>
@@ -97,7 +95,7 @@ export default {
     toggleAndChooseGender() {},
     // submit the form to our backend api
     async submitForm() {
-      const res = await fetch("http://127.0.0.1:8000/users", {
+      await fetch("http://127.0.0.1:8000/users", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
 
