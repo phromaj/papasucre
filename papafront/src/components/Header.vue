@@ -1,10 +1,60 @@
-<template lang="">
-  <nav>
-    <RouterLink to="/">Home</RouterLink>
-    <RouterLink to="/about">About</RouterLink>
-  </nav>
-</template>
-<script lang="ts">
-export default {};
+<script setup>
+import { Icon } from "@iconify/vue";
+import { RouterLink } from "vue-router";
 </script>
-<style lang=""></style>
+
+<template lang="">
+  <div id="navbar">
+    <RouterLink to="/message" tag="message">
+      <button class="navbarbtn">
+        <Icon
+          class="icon"
+          icon="ci:message-circle"
+          width="25"
+          height="25"
+        />
+      </button>
+    </RouterLink>
+    <RouterLink to="/profile" tag="profile">
+      <button class="navbarbtn">
+        <Icon
+          class="icon"
+          icon="fa-regular:user"
+          width="21"
+          height="21"
+        />
+      </button>
+    </RouterLink>
+    <RouterLink to="/option" tag="option">
+      <button class="navbarbtn">
+        <Icon
+          class="icon"
+          icon="ant-design:setting-outlined"
+          width="25"
+          height="25"
+        />
+      </button>
+    </RouterLink>
+  </div>
+</template>
+<script>
+export default {
+  
+};
+</script>
+<style scoped>
+#navbar{
+  border: 1px solid red;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+}
+a.RouterLink, .navbarbtn{
+  width: 4em;
+  height: 4em;
+  border-radius: 100%;
+  background-color: white;
+  border: 1px solid #aaaaaa;
+}
+  
+</style>
