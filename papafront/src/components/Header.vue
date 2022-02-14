@@ -44,7 +44,6 @@ export default {
 </script>
 <style scoped>
 #navbar{
-  border: 1px solid red;
   width: 100%;
   display: flex;
   justify-content: space-evenly;
