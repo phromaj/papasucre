@@ -44,6 +44,7 @@ export default {
 </script>
 <style scoped>
 #navbar{
+  padding-top: 5%;
   width: 100%;
   display: flex;
   justify-content: space-evenly;
