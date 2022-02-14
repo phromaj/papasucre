@@ -13,7 +13,7 @@ import { Icon } from '@iconify/vue';
                         <p>Error</p>
                     </div>
                     <div class="password">
-                        <input type="password" v-bind:type="[showPassword ? 'text' : 'password']" name="password" class="input pwdInput" v-model="password" maxlength="20" placeholder="Mot de Passe">
+                        <input v-bind:type="[showPassword ? 'text' : 'password']" name="password" class="input pwdInput" v-model="password" maxlength="20" placeholder="Mot de Passe">
                         <Icon class="togglePwd" icon="ant-design:eye-filled" color="white" width="25" height="25" />
                         <span class="iconify" @click="togglePassword" data-icon="ant-design:eye-filled" style="color: white;" data-width="12" data-height="12"></span>
                         <p>Error</p>
