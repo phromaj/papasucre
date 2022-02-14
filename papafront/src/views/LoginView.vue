@@ -1,7 +1,6 @@
 <script setup>
-import { Icon } from '@iconify/vue';
-import { RouterLink, RouterView } from "vue-router";
-
+import { Icon } from "@iconify/vue";
+import { RouterLink } from "vue-router";
 </script>
 
 <template>
@@ -11,24 +10,45 @@ import { RouterLink, RouterView } from "vue-router";
       <div class="signUp">
         <RouterLink to="/signin" tag="signin">
           <button>
-            <Icon class="icon" icon="tabler:login" width="30" height="30" rotate="2" />Se Connecter
+            <Icon
+              class="icon"
+              icon="tabler:login"
+              width="30"
+              height="30"
+              rotate="2"
+            />Se Connecter
           </button>
         </RouterLink>
       </div>
       <div class="signIn">
         <RouterLink to="/signup" tag="signup">
           <button>
-            <Icon class="icon" icon="akar-icons:google-fill" width="25" height="25" />S'inscrire avec Google
+            <Icon
+              class="icon"
+              icon="akar-icons:google-fill"
+              width="25"
+              height="25"
+            />S'inscrire avec Google
           </button>
         </RouterLink>
         <RouterLink to="/" tag="signup">
           <button>
-            <Icon class="icon" icon="bi:facebook" width="25" height="25" />S'inscrire avec Facebook
+            <Icon
+              class="icon"
+              icon="bi:facebook"
+              width="25"
+              height="25"
+            />S'inscrire avec Facebook
           </button>
         </RouterLink>
         <RouterLink to="/" tag="signin">
           <button>
-            <Icon class="icon" icon="ci:message-circle" width="28" height="28" />S'inscrire avec N° de tél.
+            <Icon
+              class="icon"
+              icon="ci:message-circle"
+              width="28"
+              height="28"
+            />S'inscrire avec N° de tél.
           </button>
         </RouterLink>
       </div>
@@ -36,10 +56,7 @@ import { RouterLink, RouterView } from "vue-router";
   </div>
 </template>
 <script>
-
-export default {
-
-}
+export default {};
 </script>
 <style scoped>
 .firstPage {

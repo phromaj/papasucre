@@ -1,5 +1,5 @@
 <script setup>
-import { Icon } from '@iconify/vue';
+import { Icon } from "@iconify/vue";
 
 import { RouterLink, RouterView } from "vue-router";
 </script>
@@ -8,21 +8,43 @@ import { RouterLink, RouterView } from "vue-router";
   <body>
     <div class="signin">
       <div id="logo">
-        <img src="../assets/PAPASUCRE.png" alt="papasucre-logo">
+        <img src="../assets/PAPASUCRE.png" alt="papasucre-logo" />
       </div>
-      <div id="information" >
+      <div id="information">
         <div id="title">
           <h1>Mes informations</h1>
         </div>
         <form @submit.prevent="submitForm">
-          <input class="text-input" v-model="full_name" type="text" maxlength="30" placeholder="Nom Prénom">
-          <p>Voici comment il apparaîtra sur PapaSucré. Attention, tu ne pourras pas le modifier.</p>
+          <input
+            class="text-input"
+            v-model="full_name"
+            type="text"
+            maxlength="30"
+            placeholder="Nom Prénom"
+          />
+          <p>
+            Voici comment il apparaîtra sur PapaSucré. Attention, tu ne pourras
+            pas le modifier.
+          </p>
           <div id="gender">
             <h2>Je suis un-e</h2>
             <div class="selectGender">
-              <input :class="{ active: maleActive }" type="button" @click="getButtonValue" value="male" id="male" autocomplete="off">
-              <input :class="{ active: femaleActive }" type="button" @click="getButtonValue" value="female" id="female">
-                <!--<Icon  value="female" class="genderIcon" icon="mdi:gender-female" color="#2d2d2d" width="32" height="32" />-->
+              <input
+                :class="{ active: maleActive }"
+                type="button"
+                @click="getButtonValue"
+                value="male"
+                id="male"
+                autocomplete="off"
+              />
+              <input
+                :class="{ active: femaleActive }"
+                type="button"
+                @click="getButtonValue"
+                value="female"
+                id="female"
+              />
+              <!--<Icon  value="female" class="genderIcon" icon="mdi:gender-female" color="#2d2d2d" width="32" height="32" />-->
             </div>
           </div>
           <div id="birth">
@@ -31,12 +53,16 @@ import { RouterLink, RouterView } from "vue-router";
             </div>
             <span class="datepicker-toggle">
               <span class="datepicker-toggle-button"></span>
-              <input type="date" class="datepicker-input" v-model="user_birthdate">
+              <input
+                type="date"
+                class="datepicker-input"
+                v-model="user_birthdate"
+              />
             </span>
             <p>Votre âge sera visible par tous.</p>
           </div>
           <div id="continueButton">
-              <button type="submit" id="continue"></button>
+            <button type="submit" id="continue"></button>
           </div>
         </form>
       </div>
@@ -45,40 +71,35 @@ import { RouterLink, RouterView } from "vue-router";
 </template>
 
 <script>
-
 export default {
   data() {
     return {
-      full_name: '',
-      email: '',
-      password: '',
-      gender: '',
-      user_birthdate: '',
+      full_name: "",
+      email: "",
+      password: "",
+      gender: "",
+      user_birthdate: "",
       femaleActive: false,
       maleActive: false,
-    }
+    };
   },
   methods: {
-    getButtonValue(event){
-      if(event.target.value == "female"){
-        this.femaleActive = true
-        this.maleActive = false
-
-      }
-      else {
+    getButtonValue(event) {
+      if (event.target.value == "female") {
+        this.femaleActive = true;
+        this.maleActive = false;
+      } else {
         this.maleActive = true;
-        this.femaleActive = false
+        this.femaleActive = false;
       }
-      this.gender = event.target.value
-    }, 
-    toggleAndChooseGender(){
+      this.gender = event.target.value;
     },
+    toggleAndChooseGender() {},
     // submit the form to our backend api
     async submitForm() {
-
-      const res = await fetch('http://127.0.0.1:8000/users', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch("http://127.0.0.1:8000/users", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
 
         // pass in the information from our form
         body: JSON.stringify({
@@ -92,18 +113,15 @@ export default {
           job: "string",
           phone_number: "string",
           sex: this.gender,
-          
-        }) 
+        }),
       });
-
-    } 
-  }
-}  
-
+    },
+  },
+};
 </script>
 
 <style scoped>
-.signin{
+.signin {
   width: 100%;
 }
 
@@ -115,7 +133,7 @@ export default {
   font-size: 18px;
 }
 
-#logo{
+#logo {
   width: 100%;
   margin-top: 1rem;
   display: flex;
@@ -128,16 +146,16 @@ img {
   margin-right: 1rem;
 }
 
-input[type="button"]{
+input[type="button"] {
   cursor: pointer;
   color: transparent;
 }
-#information{
+#information {
   width: 100%;
   color: rgb(255, 255, 255);
   padding: 2% 4% 0 4%;
 }
-.text-input{
+.text-input {
   background-color: transparent;
   border: 1px solid transparent;
   border-bottom: 2px solid rgb(255, 255, 255);
@@ -146,45 +164,45 @@ input[type="button"]{
   color: white;
   font-size: 1.5em;
 }
-.text-input::placeholder{
+.text-input::placeholder {
   color: white;
   font-size: 1em;
 }
-.text-input:focus{
+.text-input:focus {
   outline: none;
 }
 
-p{
+p {
   width: 85%;
-  color: #8D8D8D;
+  color: #8d8d8d;
   padding-top: 2%;
 }
 
-#gender{
+#gender {
   width: 100%;
   color: rgb(255, 255, 255);
   height: 10em;
   padding-top: 4%;
-  
 }
 
-h2{
+h2 {
   font-size: 24px;
   line-height: 1.3em;
 }
-.selectGender{
+.selectGender {
   width: 100%;
   padding-top: 6%;
   display: flex;
   justify-content: space-evenly;
 }
 
-#male, #female{
+#male,
+#female {
   width: 6em;
   height: 6em;
   border-radius: 100%;
   background-color: white;
-  border: 3px solid #713A0B;
+  border: 3px solid #713a0b;
   justify-content: space-evenly;
 }
 
@@ -193,15 +211,15 @@ h2{
 }
 
 #male {
-  background-color: #FFFF;
-  background-image: url('https://api.iconify.design/bi/gender-male.svg?width=24&height=24');
+  background-color: #ffff;
+  background-image: url("https://api.iconify.design/bi/gender-male.svg?width=24&height=24");
   background-repeat: no-repeat;
   background-position: center;
 }
 
 #female {
-  background-color: #FFFF;
-  background-image:  url('https://api.iconify.design/bi/gender-female.svg?width=24&height=24');
+  background-color: #ffff;
+  background-image: url("https://api.iconify.design/bi/gender-female.svg?width=24&height=24");
   background-repeat: no-repeat;
   background-position: center;
 }
@@ -231,7 +249,7 @@ h2{
   font-family: "System-ui";
 }
 
-.datepicker-input:focus{
+.datepicker-input:focus {
   outline: none;
 }
 
@@ -245,7 +263,8 @@ h2{
   position: absolute;
   width: 85%;
   height: 100%;
-  background: url('https://api.iconify.design/bx/bx-calendar.svg?color=white') no-repeat right center / contain;
+  background: url("https://api.iconify.design/bx/bx-calendar.svg?color=white")
+    no-repeat right center / contain;
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {
@@ -257,20 +276,19 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   cursor: pointer;
 }
 
-button{
+button {
   cursor: pointer;
 }
 
-#continueButton{
+#continueButton {
   width: 100%;
   padding-top: 8%;
   padding-bottom: 8%;
   display: flex;
   justify-content: center;
-
 }
 /*  Continue Button  */
-#continue{
+#continue {
   text-decoration: none;
   border: 1px solid #fff;
   border-radius: 20px;
@@ -279,7 +297,6 @@ button{
   background-color: #fff;
   font-size: 1.1em;
   line-height: 1.7em;
-  
 }
 
 @media (min-width: 1024px) {
@@ -288,6 +305,5 @@ button{
     display: flex;
     align-items: center;
   }
-  
 }
 </style>
