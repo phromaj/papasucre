@@ -8,7 +8,7 @@ import { RouterLink, RouterView } from "vue-router";
   <body>
     <div class="signin">
       <div id="logo">
-        <img  src="../assets/PAPASUCRE.png" alt="">
+        <img src="../assets/PAPASUCRE.png" alt="papasucre-logo">
       </div>
       <div id="information" >
         <div id="title">
@@ -106,12 +106,7 @@ export default {
 .signin{
   width: 100%;
 }
-body {
-  background: linear-gradient(#472709, #241303);
-  background-repeat: no-repeat;
-  background-position: fixed;
-  width: 100%;
-}
+
 #title {
   width: 25%;
   color: rgb(255, 255, 255);
@@ -119,19 +114,29 @@ body {
   line-height: 1.2;
   font-size: 18px;
 }
+
+#logo{
+  width: 100%;
+  margin-top: 1rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+img {
+  width: 70px;
+  height: 70px;
+  margin-right: 1rem;
+}
+
 input[type="button"]{
   cursor: pointer;
   color: transparent;
 }
 #information{
   width: 100%;
-  padding-top: 10px;
-  padding-left: 8%;
-  padding-right: 8%;
   color: rgb(255, 255, 255);
+  padding: 2% 4% 0 4%;
 }
-
-
 .text-input{
   background-color: transparent;
   border: 1px solid transparent;
@@ -148,11 +153,13 @@ input[type="button"]{
 .text-input:focus{
   outline: none;
 }
+
 p{
   width: 85%;
   color: #8D8D8D;
   padding-top: 2%;
 }
+
 #gender{
   width: 100%;
   color: rgb(255, 255, 255);
@@ -160,6 +167,7 @@ p{
   padding-top: 4%;
   
 }
+
 h2{
   font-size: 24px;
   line-height: 1.3em;
@@ -167,12 +175,10 @@ h2{
 .selectGender{
   width: 100%;
   padding-top: 6%;
-  
   display: flex;
-  justify-content: center;
   justify-content: space-evenly;
-  
 }
+
 #male, #female{
   width: 6em;
   height: 6em;
@@ -180,6 +186,10 @@ h2{
   background-color: white;
   border: 3px solid #713A0B;
   justify-content: space-evenly;
+}
+
+.active {
+  border: 3px solid rgb(211, 162, 0) !important;
 }
 
 #male {
@@ -197,13 +207,14 @@ h2{
 }
 
 #birth {
-  padding-top: 6%;
+  padding: 1% 0;
   width: 100%;
-  padding-bottom: 2px;
 }
+
 #birthTitle {
   width: 45%;
   color: rgb(255, 255, 255);
+  height: 5.5em;
 }
 
 .datepicker-input {
@@ -213,10 +224,11 @@ h2{
   background-color: transparent;
   border: 1px solid transparent;
   border-bottom: 2px solid rgb(255, 255, 255);
-  width: 80%;
+  width: 85%;
   height: 2em;
   color: white;
   font-size: 1.2em;
+  font-family: "System-ui";
 }
 
 .datepicker-input:focus{
@@ -226,12 +238,12 @@ h2{
 .datepicker-toggle {
   display: inline-block;
   position: relative;
-  width: 70%;
+  width: 80%;
   height: 2em;
 }
 .datepicker-toggle-button {
   position: absolute;
-  width: 100%;
+  width: 85%;
   height: 100%;
   background: url('https://api.iconify.design/bx/bx-calendar.svg?color=white') no-repeat right center / contain;
 }
@@ -240,7 +252,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   opacity: 0;
   position: absolute;
   left: 0;
-  width: 100%;
   margin: 0;
   padding: 0;
   cursor: pointer;
@@ -269,24 +280,6 @@ button{
   font-size: 1.1em;
   line-height: 1.7em;
   
-}
-
-.active {
-  border: 3px solid brown !important;
-}
-
-#logo{
-  width: 100%;
-  margin-top: 1rem;
-  display: flex;
-  justify-content: flex-end;
-}
-img {
-  width: 70px;
-  height: 70px;
-  margin-right: 1rem;
-
-  object-fit: cover;
 }
 
 @media (min-width: 1024px) {

@@ -2,8 +2,8 @@
 <div>
     <body>
         <div class="signup">
-            <div class="logo">
-                <img src="../assets/PAPASUCRE.png" alt />
+            <div id="logo">
+                <img src="../assets/PAPASUCRE.png" alt="papasucre-logo" />
             </div>
             <div class="information">
                 <h1>Informations complémentaires</h1>
@@ -28,7 +28,7 @@
 
                     <div class="password">
                         <div class="passwordTitle">
-                            <h3>Saisissez votre mot de passe</h3>
+                            <h2>Saisissez votre mot de passe</h2>
                         </div>
                         <input
                             v-model="password"
@@ -44,7 +44,7 @@
                     >{{ error.$message }}</small>
                     <div class="verifPassword">
                         <div class="verifPasswordTitle">
-                            <h4>Vérifiez votre mot de passe</h4>
+                            <h2>Vérifiez votre mot de passe</h2>
                         </div>
                         <input
                             v-model="password_verif"
@@ -115,6 +115,19 @@ body {
     background-position: fixed;
     width: 100%;
 }
+
+#logo {
+    width: 100%;
+    margin-top: 1rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+#logo img {
+    width: 70px;
+    height: 70px;
+    
+}
 .mailTitle {
     padding-top: 3%;
     width: 45%;
@@ -146,11 +159,11 @@ body {
 }
 .information {
     width: 100%;
-    padding-top: 30%;
-    padding-left: 5%;
-    padding-right: 5%;
+    padding-top: 2%;
     color: rgb(255, 255, 255);
+    padding: 0 4%;
 }
+
 input {
     background-color: transparent;
     border: 1px solid transparent;
@@ -167,10 +180,8 @@ input::placeholder {
 input:focus {
     outline: none;
 }
-h2,
-h3,
-h4 {
-    font-size: 24px;
+h2 {
+    font-size: 1.5em;
     line-height: 1.3em;
     vertical-align: middle;
 }
@@ -191,13 +202,5 @@ h4 {
     background-color: #fff;
     font-size: 1.1em;
     line-height: 1.7em;
-}
-.logo {
-    padding-top: 5%;
-    padding-right: 5%;
-    height: 8em;
-    display: flex;
-    justify-content: right;
-    float: right;
 }
 </style>
