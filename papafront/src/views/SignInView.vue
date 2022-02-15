@@ -71,10 +71,7 @@ export default {
   },
 
   methods: {
-    togglePassword() {
-      let showPassword = false;
-      showPassword != showPassword;
-    },
+    togglePassword() {}
   },
 };
 </script>
