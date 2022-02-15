@@ -12,36 +12,63 @@
                 @swiper="onSwiper"
                 @slideChange="onSlideChange"
             >
-                <swiper-slide class="card">
-                    <h2>Slide 1</h2>
+                <swiper-slide>
+                    <div class="card-container">
+                        <TinderCard title="Slide 1" />
+                    </div>
                 </swiper-slide>
-                <swiper-slide class="card card-2">
-                    <h2>Slide 2</h2>
+                <swiper-slide>
+                    <div class="card-container">
+                        <TinderCard title="Slide 1" />
+                    </div>
                 </swiper-slide>
-                <swiper-slide class="card">
-                    <h2>Slide 3</h2>
+                <swiper-slide>
+                    <div class="card-container">
+                        <TinderCard title="Slide 1" />
+                    </div>
                 </swiper-slide>
-                <swiper-slide class="card">
-                    <h2>Slide 4</h2>
+                <swiper-slide>
+                    <div class="card-container">
+                        <TinderCard title="Slide 1" />
+                    </div>
                 </swiper-slide>
-                <swiper-slide class="card">
-                    <h2>Slide 5</h2>
+                <swiper-slide>
+                    <div class="card-container">
+                        <TinderCard title="Slide 1" />
+                    </div>
                 </swiper-slide>
             </swiper>
             <!-- navigation -->
             <div class="navigation">
-                <div class="slider-button dislike-button" :class="'swipe-next'">Dislike</div>
-                <div class="slider-button like-button" :class="'swipe-next'">Like</div>
+                <button
+                    @touchstart="dislikeHoverColorChange"
+                    @touchend="leaveColorChange"
+                    class="slider-button dislike-button"
+                    :class="'swipe-next'"
+                >
+                    <Icon class="icon" icon="clarity:heart-broken-solid" width="20" :inline="true" />
+                </button>
+                <button
+                    @touchstart="likeHoverColorChange"
+                    @touchend="leaveColorChange"
+                    class="slider-button like-button"
+                    :class="'swipe-next'"
+                >
+                    <Icon class="icon" icon="flat-color-icons:like" width="22" height="22" />
+                </button>
             </div>
         </div>
     </main>
 </template>
 <script>
 // import Swiper core and required modules
-import { Navigation, Pagination, Scrollbar, A11y, EffectFlip, EffectCoverflow, EffectCards } from 'swiper';
-
+import { Navigation, Pagination, Scrollbar, A11y, EffectCards } from 'swiper';
 // Import Swiper Vue.js components
 import { Swiper, SwiperSlide } from 'swiper/vue';
+
+import TinderCard from './TinderCardComponent.vue';
+import { Icon } from "@iconify/vue";
+import { RouterLink } from "vue-router";
 
 // Import Swiper styles
 import 'swiper/css';
@@ -55,8 +82,32 @@ export default {
     components: {
         Swiper,
         SwiperSlide,
+        TinderCard,
+        Icon,
+        RouterLink,
     },
     methods: {
+        likeHoverColorChange() {
+            let cards = document.getElementsByClassName("card-front");
+            for (let index = 0; index < cards.length; index++) {
+                let element = cards[index];
+                element.style.border = "2px solid green";
+            }
+        },
+        dislikeHoverColorChange() {
+            let cards = document.getElementsByClassName("card-front");
+            for (let index = 0; index < cards.length; index++) {
+                let element = cards[index];
+                element.style.border = "2px solid red";
+            }
+        },
+        leaveColorChange() {
+            let cards = document.getElementsByClassName("card-front");
+            for (let index = 0; index < cards.length; index++) {
+                let element = cards[index];
+                element.style.border = "transparent";
+            }
+        },
         prev() {
             this.$refs.swiper.$swiper.slidePrev()
         },
@@ -72,6 +123,7 @@ export default {
     },
     data() {
         return {
+            background: "https://picsum.photos/600/900",
             modules: [Navigation, Pagination, Scrollbar, A11y, EffectCards],
             navigation: {
                 nextEl: '.swipe-next',
@@ -84,32 +136,28 @@ export default {
 };
 </script>
 <style scoped>
-.card {
-    width: 600px;
-    height: 550px;
-    background-color: red;
+.card-container {
+    width: 100%;
+    height: 75vh;
 }
-.feed-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .slider-container {
-    width: 50%;
+    margin-top: 10px;
+    margin-left: 7px;
+    margin-right: 7px;
 }
 
 .navigation {
     display: flex;
     justify-content: space-evenly;
+    margin-top: 1vh;
 }
 
 .slider-button {
-    cursor: pointer;
-    padding: 20px;
-    background-color: blue;
-}
-.card-2{
-    background-color: blue;;
+    width: 53px;
+    height: 53px;
+    margin-top: 10px;
+    border-radius: 100%;
+    background-color: white;
+    border: 1px solid #aaaaaa;
 }
 </style>

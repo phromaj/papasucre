@@ -7,7 +7,7 @@
 </template>
 <script>
 import Tinder from "@/components/TinderComponent.vue"
-import Header from "@/components/HeaderComponent.vue"
+import Header from "@/components/Header.vue"
 
 
 export default {

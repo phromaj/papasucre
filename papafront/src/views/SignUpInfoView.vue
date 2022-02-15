@@ -62,7 +62,7 @@ import { RouterLink, RouterView } from "vue-router";
             <p>Votre âge sera visible par tous.</p>
           </div>
           <div id="continueButton">
-            <button type="submit" id="continue"></button>
+            <button type="submit" id="continue">Continuer</button>
           </div>
         </form>
       </div>
@@ -273,6 +273,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   left: 0;
   margin: 0;
   padding: 0;
+  width: 100%;
   cursor: pointer;
 }
 
