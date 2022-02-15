@@ -48,7 +48,9 @@ import { Icon } from "@iconify/vue";
         <div id="pwdForget">
           <a href=""><p>Mot de passe oublié ?</p></a>
         </div>
-        <button type="submit" id="buttonConnect">Connexion</button>
+        <div id="loginButton">
+          <button type="submit" id="buttonConnect">Connexion</button>
+        </div>
       </form>
     </div>
   </div>
@@ -99,11 +101,11 @@ export default {
 
 .email,
 .password {
-  width: 100%;
+  width: 70%;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  margin-bottom: 2em;
+  justify-content: center;
+  margin: 0 auto 2em auto;
 }
 
 .input {
@@ -139,6 +141,11 @@ export default {
   color: #fff;
 }
 
+#loginButton {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2em;
+}
 #buttonConnect {
   text-decoration: none;
   border: 1px solid #fff;

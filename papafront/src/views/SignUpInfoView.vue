@@ -1,7 +1,3 @@
-<script setup>
-
-</script>
-
 <template>
   <body>
     <div class="signin">
@@ -15,7 +11,7 @@
         <form @submit.prevent="submitForm">
           <input
             class="text-input"
-            v-model="full_name"
+            v-model="name"
             type="text"
             maxlength="30"
             placeholder="Nom Prénom"
@@ -54,7 +50,7 @@
               <input
                 type="date"
                 class="datepicker-input"
-                v-model="user_birthdate"
+                v-model="birth_date"
               />
             </span>
             <p>Votre âge sera visible par tous.</p>
@@ -69,18 +65,27 @@
 </template>
 
 <script>
+import { useSignUpForm } from "../stores/signupform";
+import { required, } from "@vuelidate/validators";
+import useVuelidate from "@vuelidate/core";
 export default {
-  data() {
-    return {
-      full_name: "",
-      email: "",
-      password: "",
-      gender: "",
-      user_birthdate: "",
-      femaleActive: false,
-      maleActive: false,
-    };
-  },
+  setup() {
+        // instancie le store
+        const store = useSignUpForm();
+        return {
+            v$: useVuelidate(),
+            store,
+        };
+    },
+    data() {
+        return {
+          name: "",
+          sex: "",
+          femaleActive: false,
+          maleActive: false,
+          birth_date: "",
+        };
+    },
   methods: {
     getButtonValue(event) {
       if (event.target.value == "female") {
@@ -90,30 +95,29 @@ export default {
         this.maleActive = true;
         this.femaleActive = false;
       }
-      this.gender = event.target.value;
+      this.sex = event.target.value;
     },
-    toggleAndChooseGender() {},
     // submit the form to our backend api
-    async submitForm() {
-      await fetch("http://127.0.0.1:8000/users", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-
-        // pass in the information from our form
-        body: JSON.stringify({
-          name: this.full_name,
-          username: "string",
-          email: "string",
-          password: "string",
-          location: "string",
-          birth_date: new Date(this.user_birthdate),
-          age: 0,
-          job: "string",
-          phone_number: "string",
-          sex: this.gender,
-        }),
+    submitForm() {
+      this.v$.$touch();
+      if (this.v$.$error) return;
+      // complète l'utilisateur dans le store au fur et au mesure
+      this.store.$patch((state) => {
+          (state.name = this.name), (state.sex = this.sex), (state.birth_date = this.birth_date);
       });
+      console.log(this.store.$state);
+      // methode pour poster un utilisateur dans l'api
+      this.$router.push("/signup-profile");
     },
+  },
+  validations() {
+    return {
+      name: { required },
+      sex: { required },
+      femaleActive: false,
+      maleActive: false,
+      birth_date: { required },
+    };
   },
 };
 </script>
