@@ -1,67 +1,63 @@
 <template>
-  <body>
-    <div class="signin">
-      <div id="logo">
-        <img src="../assets/PAPASUCRE.png" alt="papasucre-logo" />
-      </div>
-      <div id="information">
-        <div id="title">
-          <h1>Mes informations</h1>
-        </div>
-        <form @submit.prevent="submitForm">
-          <input
-            class="text-input"
-            v-model="name"
-            type="text"
-            maxlength="30"
-            placeholder="Nom Prénom"
-          />
-          <p>
-            Voici comment il apparaîtra sur PapaSucré. Attention, tu ne pourras
-            pas le modifier.
-          </p>
-          <div id="gender">
-            <h2>Je suis un-e</h2>
-            <div class="selectGender">
-              <input
-                :class="{ active: maleActive }"
-                type="button"
-                @click="getButtonValue"
-                value="male"
-                id="male"
-                autocomplete="off"
-              />
-              <input
-                :class="{ active: femaleActive }"
-                type="button"
-                @click="getButtonValue"
-                value="female"
-                id="female"
-              />
-              <!--<Icon  value="female" class="genderIcon" icon="mdi:gender-female" color="#2d2d2d" width="32" height="32" />-->
-            </div>
-          </div>
-          <div id="birth">
-            <div id="birthTitle">
-              <h2>Date d'anniversaire</h2>
-            </div>
-            <span class="datepicker-toggle">
-              <span class="datepicker-toggle-button"></span>
-              <input
-                type="date"
-                class="datepicker-input"
-                v-model="birth_date"
-              />
-            </span>
-            <p>Votre âge sera visible par tous.</p>
-          </div>
-          <div id="continueButton">
-            <button type="submit" id="continue">Continuer</button>
-          </div>
-        </form>
-      </div>
+<body>
+  <div class="signin">
+    <div id="logo">
+      <img src="../assets/PAPASUCRE.png" alt="papasucre-logo" />
     </div>
-  </body>
+    <div id="information">
+      <div id="title">
+        <h1>Mes informations</h1>
+      </div>
+      <form @submit.prevent="submitForm">
+        <input
+          class="text-input"
+          v-model="name"
+          type="text"
+          maxlength="30"
+          placeholder="Nom Prénom"
+        />
+        <p>
+          Voici comment il apparaîtra sur PapaSucré. Attention, tu ne pourras
+          pas le modifier.
+        </p>
+        <div id="gender">
+          <h2>Je suis un-e</h2>
+          <div class="selectGender">
+            <input
+              :class="{ active: maleActive }"
+              type="button"
+              @click="getButtonValue"
+              value="male"
+              id="male"
+              autocomplete="off"
+            />
+            <input
+              :class="{ active: femaleActive }"
+              type="button"
+              @click="getButtonValue"
+              value="female"
+              id="female"
+            />
+            <!--<Icon  value="female" class="genderIcon" icon="mdi:gender-female" color="#2d2d2d" width="32" height="32" />-->
+          </div>
+        </div>
+        <div id="birth">
+          <div id="birthTitle">
+            <h2>Date d'anniversaire</h2>
+          </div>
+          <span class="datepicker-toggle">
+            <span class="datepicker-toggle-button"></span>
+            <input type="date" class="datepicker-input" v-model="birth_date" />
+          </span>
+          <p>Votre âge sera visible par tous.</p>
+        </div>
+        <div id="continueButton">
+          <button type="submit" id="continue">Continuer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
 </template>
 
 <script>
@@ -70,22 +66,22 @@ import { required, } from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
 export default {
   setup() {
-        // instancie le store
-        const store = useSignUpForm();
-        return {
-            v$: useVuelidate(),
-            store,
-        };
-    },
-    data() {
-        return {
-          name: "",
-          sex: "",
-          femaleActive: false,
-          maleActive: false,
-          birth_date: "",
-        };
-    },
+    // instancie le store
+    const store = useSignUpForm();
+    return {
+      v$: useVuelidate(),
+      store,
+    };
+  },
+  data() {
+    return {
+      name: "",
+      sex: "",
+      femaleActive: false,
+      maleActive: false,
+      birth_date: "",
+    };
+  },
   methods: {
     getButtonValue(event) {
       if (event.target.value == "female") {
@@ -103,10 +99,11 @@ export default {
       if (this.v$.$error) return;
       // complète l'utilisateur dans le store au fur et au mesure
       this.store.$patch((state) => {
-          (state.name = this.name), (state.sex = this.sex), (state.birth_date = this.birth_date);
+        (state.name = this.name), (state.sex = this.sex), (state.birth_date = this.birth_date);
       });
       console.log(this.store.$state);
       // methode pour poster un utilisateur dans l'api
+      //this.store.postUser();
       this.$router.push("/signup-profile");
     },
   },
