@@ -9,13 +9,24 @@
         <h1>Mes informations</h1>
       </div>
       <form @submit.prevent="submitForm">
-        <input
-          class="text-input"
-          v-model="name"
-          type="text"
-          maxlength="30"
-          placeholder="Nom Prénom"
-        />
+        <div class="container">
+          <div class="inputName">
+            <input
+              class="text-input"
+              v-model="name"
+              type="text"
+              maxlength="20"
+              placeholder="Nom Prénom"
+            />
+            <div>
+            <small  class="error"
+                    v-for="(error, index) of v$.name.$errors"
+                    :key="index"
+                    >{{ error.$message }}</small
+            >
+            </div>
+          </div>
+        </div>
         <p>
           Voici comment il apparaîtra sur PapaSucré. Attention, tu ne pourras
           pas le modifier.
@@ -38,19 +49,35 @@
               value="female"
               id="female"
             />
-            <!--<Icon  value="female" class="genderIcon" icon="mdi:gender-female" color="#2d2d2d" width="32" height="32" />-->
+           </div>
+            <div>
+            <small  class="error genderError"
+                    v-for="(error, index) of v$.sex.$errors"
+                    :key="index"
+                >{{ error.$message }}</small
+            >
+          </div>
+          </div>
+        <div class="containerBirth">
+          <div id="birth">
+            <div id="birthTitle">
+              <h2>Date d'anniversaire</h2>
+            </div>
+            <span class="datepicker-toggle">
+              <span class="datepicker-toggle-button"></span>
+              <input type="date" class="datepicker-input" v-model="birth_date" />
+            </span>
+          </div>
+          <div>
+            <small  class="error"
+                    v-for="(error, index) of v$.birth_date.$errors"
+                    :key="index"
+                  >{{ error.$message }}</small
+            >
           </div>
         </div>
-        <div id="birth">
-          <div id="birthTitle">
-            <h2>Date d'anniversaire</h2>
-          </div>
-          <span class="datepicker-toggle">
-            <span class="datepicker-toggle-button"></span>
-            <input type="date" class="datepicker-input" v-model="birth_date" />
-          </span>
-          <p>Votre âge sera visible par tous.</p>
-        </div>
+        
+         <p>Votre âge sera visible par tous.</p>
         <div id="continueButton">
           <button type="submit" id="continue">Continuer</button>
         </div>
@@ -62,7 +89,7 @@
 
 <script>
 import { useSignUpForm } from "../stores/signupform";
-import { required, } from "@vuelidate/validators";
+import { helpers, minLength, required, } from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
 export default {
   setup() {
@@ -109,11 +136,23 @@ export default {
   },
   validations() {
     return {
-      name: { required },
-      sex: { required },
+      name: {
+        required: helpers.withMessage('Veuillez renseignez votre Nom', required),
+        minLength: helpers.withMessage(
+          ({
+            $params
+          }) => `Votre nom doit comporter au minimum ${$params.min} caractères`,
+          minLength(3),
+          )
+      },
+      sex: { 
+        required: helpers.withMessage('Veuillez renseignez votre genre', required)
+        },
+      birth_date: { 
+        required: helpers.withMessage('Veuillez renseignez votre date de naissance', required)
+        },
       femaleActive: false,
       maleActive: false,
-      birth_date: { required },
     };
   },
 };
@@ -145,6 +184,15 @@ img {
   margin-right: 1rem;
 }
 
+.inputName {
+  height: 3.2em;
+}
+
+.error {
+  color: red;
+  font-size: 0.95em;
+}
+
 input[type="button"] {
   cursor: pointer;
   color: transparent;
@@ -154,12 +202,20 @@ input[type="button"] {
   color: rgb(255, 255, 255);
   padding: 2% 4% 0 4%;
 }
+
+.container {
+  height: 5em;
+}
+.containerBirth {
+  height: 10em;
+}
 .text-input {
   background-color: transparent;
   border: 1px solid transparent;
   border-bottom: 2px solid rgb(255, 255, 255);
   width: 70%;
   height: 2em;
+  margin-bottom: 0.3em;
   color: white;
   font-size: 1.5em;
 }
@@ -174,14 +230,21 @@ input[type="button"] {
 p {
   width: 85%;
   color: #8d8d8d;
-  padding-top: 2%;
+  height: 3em;
 }
 
 #gender {
   width: 100%;
   color: rgb(255, 255, 255);
-  height: 10em;
+  height: 12em;
   padding-top: 4%;
+}
+
+.genderError {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 0.4em;
 }
 
 h2 {
@@ -245,7 +308,7 @@ h2 {
   height: 2em;
   color: white;
   font-size: 1.2em;
-  font-family: "System-ui";
+  font-family: "Arial";
 }
 
 .datepicker-input:focus {

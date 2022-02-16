@@ -10,24 +10,52 @@
                         <h1>Informations complémentaires</h1>
                     </div>
                     <form @submit.prevent="submitForm">
-                        <div class="description">
-                            <div class="descriptionTitle">
-                                <h2>Description</h2>
+                        <div class="container">
+                            <div class="description">
+                                <div class="descriptionTitle">
+                                    <h2>Description</h2>
+                                </div>
+                                <input v-model="description" maxlength="40" type="text" placeholder="centre d'interêts, goûts, ...">
                             </div>
-                            <input v-model="description" type="text" placeholder="centre d'interêts, goûts, ...">
-                        </div>
-                        <div class="location">
-                            <div class="locationTitle">
-                                <h3>Où habitez-vous</h3>
+                            <div>
+                                <small  class="error"
+                                        v-for="(error, index) of v$.description.$errors"
+                                        :key="index">
+                                        {{ error.$message }}
+                                </small>
                             </div>
-                            <input v-model="location" type="text" placeholder="Pays / Ville">
                         </div>
-                        <div class="job">
-                            <div class="jobTitle">
-                                <h4>Votre métier</h4>
+                        <div class="container">
+                            <div class="location">
+                                <div class="locationTitle">
+                                    <h3>Où habitez-vous</h3>
+                                </div>
+                                <input v-model="location" type="text" placeholder="Pays / Ville">
                             </div>
-                            <input v-model="job" type="text" placeholder="ex: ... ">
+                            <div>
+                                <small  class="error"
+                                        v-for="(error, index) of v$.location.$errors"
+                                        :key="index">
+                                        {{ error.$message }}
+                                </small>
+                            </div>
                         </div>
+                        <div class="container">
+                            <div class="job">
+                                <div class="jobTitle">
+                                    <h4>Votre métier</h4>
+                                </div>
+                                <input v-model="job" type="text" maxlength="20">
+                            </div>
+                            <div>
+                                <small  class="error"
+                                        v-for="(error, index) of v$.job.$errors"
+                                        :key="index">
+                                        {{ error.$message }}
+                                </small>
+                            </div>
+                        </div>
+                       
                         <div class="continueButton">
                             <button type="submit" class="continue">
                                 <span>Continuer</span>
@@ -41,9 +69,11 @@
 </template>
 <script>
 import { useSignUpForm } from "../stores/signupform";
-import { required, } from "@vuelidate/validators";
+import { helpers, minLength, required, } from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
+
 export default {
+
     setup() {
         // instancie le store
         const store = useSignUpForm();
@@ -52,11 +82,13 @@ export default {
             store,
         };
     },
+    
     data() {
         return {
         description: "",
         location: "",
         job: "",
+        cities: [],
         };
     },
     methods:{
@@ -76,9 +108,33 @@ export default {
     },
     validations() {
         return {
-        description: { required },
-        location: { required },
-        job: { required },
+        description: { 
+            required: helpers.withMessage('Veuillez renseignez une description', required),
+            minLength: helpers.withMessage(
+                ({
+                    $params
+                }) => `La description doit contenir au minimum ${$params.min} caractères.`,
+                minLength(5),
+                )
+            },
+        location: { 
+            required: helpers.withMessage('Veuillez renseignez une localisation', required),
+            minLength: helpers.withMessage(
+                ({
+                    $params
+                }) => `La localisation doit comporter au minimum ${$params.min} caractères.`,
+                minLength(3)
+                )
+            },
+        job: { 
+            required: helpers.withMessage('Veuillez renseignez un métier.', required),
+             minLength: helpers.withMessage(
+                ({
+                    $params
+                }) => `Le métier doit comporter au minimum ${$params.min} caractères.`,
+                minLength(3)
+                )
+            },
         };
     },
 }
@@ -109,6 +165,11 @@ export default {
         height: 3em;
         line-height: 1.2;
     }
+    .error {
+        color: red;
+        font-size: 0.95em;
+    }
+
 
     /** div form */
     .description, .location, .job{
@@ -142,6 +203,10 @@ export default {
     }
     input:focus {
         outline: none;
+    }
+
+    .container {
+        height: 7em;
     }
 
     /** continue button */
