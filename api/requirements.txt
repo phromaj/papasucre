@@ -18,6 +18,7 @@ starlette==0.17.1
 typing-extensions==4.0.1
 urllib3==1.26.8
 uvicorn==0.17.4
-uvloop==0.16.0
 watchgod==0.7
 websockets==10.1
+
+certifi~=2021.10.8

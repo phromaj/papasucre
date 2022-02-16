@@ -18,10 +18,10 @@ export const useSignUpForm = defineStore("signupform", {
     sex: "string",
     is_verified: false,
     has_subscription: false,
-    photo_album: ["string"],
-    profile_picture: "string",
-    disliked_user_list: ["string"],
-    liked_user_list: ["string"],
+    photo_album: [],
+    profile_picture: "",
+    disliked_user_list: [],
+    liked_user_list: [],
   }),
   actions: {
     postUser() {

@@ -70,8 +70,8 @@ export default {
             });
             console.log(this.store.$state);
             // methode pour poster un utilisateur dans l'api
-            this.store.postUser();
-            this.$router.push("/signin");
+            //this.store.postUser();
+            this.$router.push("/docUpload");
         },
     },
     validations() {
