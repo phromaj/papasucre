@@ -21,28 +21,16 @@ import { Icon } from "@iconify/vue";
         </div>
         <div class="password">
           <input
-            v-bind:type="[showPassword ? 'text' : 'password']"
+            :type="type"
             name="password"
             class="input pwdInput"
             v-model="password"
             maxlength="20"
             placeholder="Mot de Passe"
           />
-          <Icon
-            class="togglePwd"
-            icon="ant-design:eye-filled"
-            color="white"
-            width="25"
-            height="25"
-          />
-          <span
-            class="iconify"
-            @click="togglePassword"
-            data-icon="ant-design:eye-filled"
-            style="color: white"
-            data-width="12"
-            data-height="12"
-          ></span>
+          <button class="togglePwd" @click="togglePassword">
+            <Icon icon="ant-design:eye-filled" color="white" width="25" height="25" />
+          </button>
           <p>Error</p>
         </div>
         <div id="pwdForget">
@@ -66,12 +54,18 @@ export default {
     return {
       mail: "",
       password: "",
-      showPassword: false,
+      type: 'password',
     };
   },
 
   methods: {
-    togglePassword() {}
+    togglePassword() {
+      if(this.type === 'password') {
+        this.type = 'text';
+      } else {
+        this.type = 'password';
+      }
+    }
   },
 };
 </script>
@@ -125,8 +119,13 @@ export default {
 
 .togglePwd {
   position: absolute;
-  left: 90%;
+  left: 88%;
   top: 18%;
+  border: 1px solid transparent;
+  background-color: transparent;
+}
+.togglePwd:focus {
+  outline: none;
 }
 
 #pwdForget {
