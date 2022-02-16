@@ -218,12 +218,6 @@ button {
   }
 }
 
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
-}
-
 nav {
   width: 100%;
   font-size: 12px;

@@ -6,68 +6,75 @@
           <img src="../assets/PAPASUCRE.png" alt="papasucre-logo" />
         </div>
         <div class="information">
-          <h1>Informations complémentaires</h1>
+          <h1>Informations <br>Personnelles</h1>
           <form @submit.prevent="submitForm">
-            <div class="mail">
-              <div class="mailTitle">
-                <h2>Saisissez votre mail</h2>
-              </div>
+            <div class="container">
+              <div class="mail">
+                <div class="mailTitle">
+                  <h2>Saisissez votre mail</h2>
+                </div>
 
-              <input
-                v-model="email"
-                type="mail"
-                maxlength="25"
-                placeholder="mail@exemple.com"
-              />
-              <Icon id="mailIcon" icon="ant-design:mail-outlined" color="white" width="25" height="25" />
-            </div>
-            <small
-              class="error"
-              v-for="(error, index) of v$.email.$errors"
-              :key="index"
-              >{{ error.$message }}</small
-            >
-
-            <div class="password">
-              <div class="passwordTitle">
-                <h2>Saisissez votre mot de passe</h2>
+                <input
+                  v-model="email"
+                  type="mail"
+                  maxlength="20"
+                  placeholder="mail@exemple.com"
+                />
+                <Icon id="mailIcon" icon="ant-design:mail-outlined" color="white" width="25" height="25" />
               </div>
-              <input
-                v-model="password"
-                :type="typePwd"
-                maxlength="30"
-                placeholder="Mot de passe"
-              />
-              <button class="togglePwd" @click="togglePassword">
-                  <Icon icon="ant-design:eye-filled" color="white" width="25" height="25" />
-              </button>
+              <small
+                class="error"
+                v-for="(error, index) of v$.email.$errors"
+                :key="index"
+                >{{ error.$message }}</small
+              >
             </div>
-            <small
-              class="error"
-              v-for="(error, index) of v$.password.$errors"
-              :key="index"
-              >{{ error.$message }}</small
-            >
-            <div class="verifPassword">
-              <div class="verifPasswordTitle">
-                <h2>Vérifiez votre mot de passe</h2>
+            
+            <div class="container containPwd">
+              <div class="password">
+                <div class="passwordTitle">
+                  <h2>Saisissez votre mot de passe</h2>
+                </div>
+                <input
+                  v-model="password"
+                  :type="typePwd"
+                  maxlength="12"
+                  placeholder="Mot de passe"
+                />
+                <button class="togglePwd" @click="togglePassword">
+                    <Icon icon="ant-design:eye-filled" color="white" width="25" height="25" />
+                </button>
               </div>
-              <input
-                v-model="password_verif"
-                :type="typePwdCheck"
-                maxlength="30"
-                placeholder="Mot de passe"
-              />
-              <button class="togglePwd" @click="togglePasswordCheck">
-                  <Icon icon="ant-design:eye-filled" color="white" width="25" height="25" />
-              </button>
+              <small
+                class="error"
+                v-for="(error, index) of v$.password.$errors"
+                :key="index"
+                >{{ error.$message }}</small
+              >
             </div>
-            <small
-              class="error"
-              v-for="(error, index) of v$.password_verif.$errors"
-              :key="index"
-              >{{ error.$message }}</small
-            >
+            <div class="container">
+              <div class="verifPassword">
+                <div class="verifPasswordTitle">
+                  <h2>Vérifiez votre mot de passe</h2>
+                </div>
+                <input
+                  v-model="password_verif"
+                  :type="typePwdCheck"
+                  maxlength="12"
+                  placeholder="Mot de passe"
+                />
+                <button class="togglePwd" @click="togglePasswordCheck">
+                    <Icon icon="ant-design:eye-filled" color="white" width="25" height="25" />
+                </button>
+              </div>
+              <small
+                class="error"
+                v-for="(error, index) of v$.password_verif.$errors"
+                :key="index"
+                >{{ error.$message }}</small
+              >
+            </div>
+            
             <div class="continueButton">
               <button type="submit" class="continue">
                 <span>Continuer</span>
@@ -81,9 +88,11 @@
 </template>
 <script>
 import useVuelidate from "@vuelidate/core";
-import { required, email, sameAs, minLength } from "@vuelidate/validators";
+import { required, email, sameAs, minLength, maxLength, helpers} from "@vuelidate/validators";
 import { useSignUpForm } from "../stores/signupform";
 import { Icon } from "@iconify/vue";
+
+
 
 export default {
   components: {
@@ -140,9 +149,30 @@ export default {
   },
   validations() {
     return {
-      email: { required, email }, // Matches this.firstName
-      password: { required, minLength: minLength(6) },
-      password_verif: { sameAsPassword: sameAs(this.password) }, // Matches this.lastName
+      email: {
+        required: helpers.withMessage('Veuillez renseigner un email', required),
+        email: helpers.withMessage(
+          ({}) => `Veuillez renseignez un email correct.`,
+            email,
+          ),
+          
+      },
+      password: {
+        required: helpers.withMessage('Veuillez renseigner un mot de passe', required),
+        minLength: helpers.withMessage(
+          ({
+            $params
+          }) => `Le mot de passe doit contenir au minimum ${$params.min} caractères.`,
+          minLength(8),
+          ),
+        },
+      password_verif: {
+        //required: helpers.withMessage('Veuillez renseignez à nouveau votre mot de passe.', required),
+        sameAsPassword: helpers.withMessage(
+          ({}) => `Le mot de passe doit correspondre à celui créer.`,
+          sameAs(this.password),
+          )
+      }
     };
   },
 };
@@ -159,8 +189,9 @@ body {
 }
 
 #logo {
-  width: 100%;
+  width: 98%;
   margin-top: 1rem;
+  margin-right: 3rem;
   display: flex;
   justify-content: flex-end;
 }
@@ -168,6 +199,14 @@ body {
 #logo img {
   width: 70px;
   height: 70px;
+}
+
+.container {
+  height: 10em;
+}
+
+.containPwd {
+  height: 11em;
 }
 .mailTitle {
   padding-top: 3%;
@@ -199,8 +238,8 @@ body {
   width: 100%;
 }
 .password {
-  padding-top: 6%;
   width: 100%;
+  
 }
 
 .togglePwd {
@@ -214,6 +253,10 @@ body {
   padding-top: 2%;
   color: rgb(255, 255, 255);
   padding: 0 4%;
+}
+.error {
+  color: red;
+  font-size: 0.95em;
 }
 
 input {
