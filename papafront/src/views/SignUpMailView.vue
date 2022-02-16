@@ -15,10 +15,11 @@
 
               <input
                 v-model="email"
-                type="text"
-                maxlength="30"
+                type="mail"
+                maxlength="25"
                 placeholder="mail@exemple.com"
               />
+              <Icon id="mailIcon" icon="ant-design:mail-outlined" color="white" width="25" height="25" />
             </div>
             <small
               class="error"
@@ -33,10 +34,13 @@
               </div>
               <input
                 v-model="password"
-                type="text"
+                :type="typePwd"
                 maxlength="30"
-                placeholder="Entrez votre mot de passe"
+                placeholder="Mot de passe"
               />
+              <button class="togglePwd" @click="togglePassword">
+                  <Icon icon="ant-design:eye-filled" color="white" width="25" height="25" />
+              </button>
             </div>
             <small
               class="error"
@@ -50,10 +54,13 @@
               </div>
               <input
                 v-model="password_verif"
-                type="text"
+                :type="typePwdCheck"
                 maxlength="30"
-                placeholder="Entrez votre mot de passe"
+                placeholder="Mot de passe"
               />
+              <button class="togglePwd" @click="togglePasswordCheck">
+                  <Icon icon="ant-design:eye-filled" color="white" width="25" height="25" />
+              </button>
             </div>
             <small
               class="error"
@@ -76,8 +83,13 @@
 import useVuelidate from "@vuelidate/core";
 import { required, email, sameAs, minLength } from "@vuelidate/validators";
 import { useSignUpForm } from "../stores/signupform";
+import { Icon } from "@iconify/vue";
 
 export default {
+  components: {
+    Icon,
+  },
+
   setup() {
     // instancie le store
     const store = useSignUpForm();
@@ -91,9 +103,28 @@ export default {
       email: "",
       password: "",
       password_verif: "",
+      typePwd: 'password',
+      typePwdCheck: 'password',
     };
   },
   methods: {
+
+    togglePassword() {
+      if(this.typePwd === 'password') {
+        this.typePwd = 'text';
+      } else {
+        this.typePwd = 'password';
+      }
+    },
+
+    togglePasswordCheck() {
+      if(this.typePwdCheck === 'password') {
+        this.typePwdCheck = 'text';
+      } else {
+        this.typePwdCheck = 'password';
+      }
+    },
+
     // submit the form to our backend api
     submitForm() {
       this.v$.$touch();
@@ -146,6 +177,10 @@ body {
   line-height: 1.2;
 }
 
+#mailIcon {
+  position: relative;
+  right: 7%;
+}
 .passwordTitle {
   width: 65%;
   color: rgb(255, 255, 255);
@@ -166,6 +201,13 @@ body {
 .password {
   padding-top: 6%;
   width: 100%;
+}
+
+.togglePwd {
+  position: relative;
+  right: 8%;
+  border: 1px solid transparent;
+  background-color: transparent;
 }
 .information {
   width: 100%;
