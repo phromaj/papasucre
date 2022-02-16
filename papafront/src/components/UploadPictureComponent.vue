@@ -5,13 +5,12 @@
     </div>
     <div class="information">
       <div id="title">
-        <h1>Mes<br />Documents</h1>
+        <h1>Ajout <br />Photo de profil</h1>
       </div>
       <form @submit.prevent="submitForm">
         <div class="document">
           <p>
-            Nous allons vérifiez votre identité. Vous devez fournir votre pièce
-            d'identité recto/verso au format .png .jpg ou .pdf
+            Veuillez ajouter une photo de profil.
           </p>
           <div class="upload">
             <div>
@@ -22,52 +21,21 @@
                 @input="pickFileRecto"
                 id="fileRecto"
                 name="ID-cardRecto"
-                accept="image/png, image/jpg, application/pdf"
+                accept="image/*,.pdf"
               />
               <label for="fileRecto">Choisissez un fichier</label>
               <p>Recto</p>
               <div
                 class="imagePreviewWrapper"
-                :style="{ 'background-image': `url(${previewImageRecto})` }"
+                :style="{ 'background-image': `url(${profile_photo})` }"
                 @click="selectImageRecto"
               ></div>
               <p>Aperçu</p>
             </div>
-            <div>
-              <input
-                type="file"
-                class="ID-card verso"
-                ref="fileInputVerso"
-                @input="pickFileVerso"
-                id="fileVerso"
-                name="ID-cardVerso"
-                accept="image/png, image/jpg, application/pdf"
-              />
-              <label for="fileVerso">Choisissez un fichier</label>
-              <p>Verso</p>
-              <div
-                class="imagePreviewWrapper"
-                :style="{ 'background-image': `url(${previewImageVerso})` }"
-                @click="selectImageVerso"
-              ></div>
-              <p>Aperçu</p>
-            </div>
           </div>
-          <div class="idCardInstruction">
-            <p>
-              Les 4 coins de votre pièce d'identité doivent être visible sur
-              l'image comme sur l'exemple ci-dessous :
-            </p>
-            <div id="idCardExample">
-              <img
-                src="../assets/idCardExample.png"
-                alt="Exemple_carte_identite"
-              />
-            </div>
             <div id="continueButton">
               <button type="submit" id="continue">Continuer</button>
             </div>
-          </div>
         </div>
       </form>
     </div>
@@ -75,6 +43,7 @@
 </template>
 <script>
 import { useSignUpForm } from "../stores/signupform";
+
 
 export default {
     setup() {
@@ -86,8 +55,7 @@ export default {
     },
     data() {
         return {
-            previewImageRecto: null,
-            previewImageVerso: null,
+            profile_photo: null,
         };
     },
 
@@ -95,47 +63,29 @@ export default {
         selectImageRecto() {
             this.$refs.fileInputRecto.click();
         },
-
-        selectImageVerso() {
-            this.$refs.fileInputVerso.click();
-        },
-
         pickFileRecto() {
             let input = this.$refs.fileInputRecto;
             let file = input.files;
             if (file && file[0]) {
                 let reader = new FileReader();
                 reader.onload = (e) => {
-                    this.previewImageRecto = e.target.result;
-                };
-                reader.readAsDataURL(file[0]);
-                this.$emit("input", file[0]);
-            }
-
-        },
-
-        pickFileVerso() {
-            let input = this.$refs.fileInputVerso;
-            let file = input.files;
-            if (file && file[0]) {
-                let reader = new FileReader();
-                reader.onload = (e) => {
-                    this.previewImageVerso = e.target.result;
+                    this.profile_photo = e.target.result;
                 };
                 reader.readAsDataURL(file[0]);
                 this.$emit("input", file[0]);
             }
         },
         submitForm() {
-            if (!this.previewImageRecto && !this.previewImageVerso) {
+            if (!this.profile_photo) {
                 return
             }
             this.store.$patch((state) => {
-                (state.photo_album = [this.previewImageRecto, this.previewImageVerso]);
+                state.profile_picture = this.profile_photo;
             });
             console.log(this.store.$state);
             // methode pour poster un utilisateur dans l'api
-            this.$router.push("/upload-profile-pic");
+            this.store.postUser();
+            this.$router.push("/signin");
 
         },
     },
@@ -170,12 +120,15 @@ img {
 }
 .document {
     width: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .upload {
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+    widows: 100%;
+    flex-direction: column;
+    align-items: center;
     margin: 5% 0;
 }
 
@@ -216,7 +169,7 @@ label {
 
 .imagePreviewWrapper {
     width: 100%;
-    height: 7em;
+    height: 20vh;
     margin-top: 10%;
     cursor: pointer;
     background-size: cover;

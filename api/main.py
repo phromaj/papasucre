@@ -1,17 +1,18 @@
 import ssl
 from typing import List
 
-from cloudinary.templatetags import cloudinary
 from fastapi import FastAPI, HTTPException
 import pymongo
 from fastapi.encoders import jsonable_encoder
 from starlette import status
 from starlette.responses import JSONResponse
-
 from models import userModel
+from fastapi.encoders import jsonable_encoder
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.cors import CORSMiddleware
-
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 cloudinary.config(
   cloud_name = "dymxiscr0",
@@ -52,7 +53,17 @@ def show_user(email: str):
 
 @app.post('/users', response_description="Add new user", response_model=userModel.User)
 def create_user(user: userModel.User):
+    # Upload picture on cloudinary
+    upload_profile = cloudinary.uploader.upload(user.profile_picture)
+    # Put cloudinary url in object
+    user.profile_picture = jsonable_encoder(upload_profile)['url']
+    for index, image in enumerate(user.photo_album):
+        upload_picture = cloudinary.uploader.upload(image)
+        # Quand on crée un compte, on index les photos comme on les reçoit dans le formulaire
+        user.photo_album[index] = jsonable_encoder(upload_picture)['url']
+
     db["users"].insert_one(user.dict(by_alias=True))
+
     return JSONResponse(status_code=status.HTTP_201_CREATED, content=jsonable_encoder(user))
 
 
