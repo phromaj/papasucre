@@ -124,9 +124,10 @@ export default {
     submitForm() {
       this.v$.$touch();
       if (this.v$.$error) return;
+      let user_age = (new Date().getFullYear() - new Date(this.birth_date).getFullYear())
       // complète l'utilisateur dans le store au fur et au mesure
       this.store.$patch((state) => {
-        (state.name = this.name), (state.sex = this.sex), (state.birth_date = this.birth_date);
+        (state.name = this.name), (state.sex = this.sex), (state.birth_date = this.birth_date), (state.age = user_age);
       });
       console.log(this.store.$state);
       // methode pour poster un utilisateur dans l'api

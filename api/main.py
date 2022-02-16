@@ -1,16 +1,36 @@
+from auth import AuthHandler
+from pydantic import BaseModel
+import cloudinary.api
+import cloudinary.uploader
+import cloudinary
 import ssl
 from typing import List
 
-from fastapi import FastAPI, HTTPException
 import pymongo
+
+from fastapi import FastAPI, Depends, HTTPException
 from fastapi.encoders import jsonable_encoder
 from starlette import status
 from starlette.responses import JSONResponse
-
 from models import userModel
+from fastapi.encoders import jsonable_encoder
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.cors import CORSMiddleware
 
+
+class AuthDetails(BaseModel):
+    email: str
+    password: str
+
+
+users = []
+auth_handler = AuthHandler()
+
+cloudinary.config(
+    cloud_name="dymxiscr0",
+    api_key="647379272942126",
+    api_secret="nALlrStvbAJ0EeXg7Zbx9uKMF68"
+)
 app = FastAPI()
 
 origins = ["*"]
@@ -25,15 +45,25 @@ app.add_middleware(
 
 client = pymongo.MongoClient(
     "mongodb+srv://rob:rob123456@cluster0.hv6ea.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
-db = client.test
+db = client.papa_sucre
+
+
+@app.get('/unprotected')
+def unprotected():
+    return {'hello': 'world'}
+
+
+@app.get('/protected')
+def protected(email=Depends(auth_handler.auth_wrapper)):
+    return {'name': email}
 
 
 @app.get('/users', response_description="List all users", response_model=List[userModel.User])
 def list_users():
-    students = []
-    for student in db.users.find():
-        students.append(student)
-    return students
+    users = []
+    for user in db.users.find():
+        users.append(user)
+    return users
 
 
 @app.get("/users/{email}", response_description="Get a single user", response_model=userModel.User)
@@ -45,8 +75,36 @@ def show_user(email: str):
 
 @app.post('/users', response_description="Add new user", response_model=userModel.User)
 def create_user(user: userModel.User):
+    # Upload picture on cloudinary
+    upload_profile = cloudinary.uploader.upload(user.profile_picture)
+    # Put cloudinary url in object
+    user.profile_picture = jsonable_encoder(upload_profile)['url']
+    for index, image in enumerate(user.photo_album):
+        upload_picture = cloudinary.uploader.upload(image)
+        # Quand on crée un compte, on index les photos comme on les reçoit dans le formulaire
+        user.photo_album[index] = jsonable_encoder(upload_picture)['url']
+
+    if (u := db.users.find_one({"email": user.email})) is not None:
+        raise HTTPException(status_code=401, detail='email already exists')
+    user.password = auth_handler.get_password_hash(user.password)
     db["users"].insert_one(user.dict(by_alias=True))
+
     return JSONResponse(status_code=status.HTTP_201_CREATED, content=jsonable_encoder(user))
+
+
+@app.post('/user-login')
+def login(auth: AuthDetails):
+    user = None
+    for u in db.users.find():
+        if u['email'] == auth.email:
+            user = u
+            break
+
+    if (user is None) or (not auth_handler.verify_password(auth.password, user['password'])):
+        raise HTTPException(
+            status_code=401, detail='Invalid email and/or password')
+    token = auth_handler.encode_token(user['email'])
+    return {'token': token}
 
 
 @app.put('/users/{email}', response_description="Update a user", response_model=userModel.UpdateUser)
@@ -54,7 +112,8 @@ def update_user(email: str, user: userModel.UpdateUser):
     user = {k: v for k, v in user.dict().items() if v is not None}
 
     if len(user) >= 1:
-        update_result = db["users"].update_one({"email": email}, {"$set": user})
+        update_result = db["users"].update_one(
+            {"email": email}, {"$set": user})
         if update_result.modified_count == 1:
             if (
                     updated_user := db["users"].find_one({"email": email})
