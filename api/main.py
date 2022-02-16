@@ -1,5 +1,6 @@
 from typing import List
 
+from cloudinary.templatetags import cloudinary
 from fastapi import FastAPI, HTTPException
 import pymongo
 from fastapi.encoders import jsonable_encoder
@@ -10,6 +11,12 @@ from models import userModel
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.cors import CORSMiddleware
 
+
+cloudinary.config(
+  cloud_name = "dymxiscr0",
+  api_key = "647379272942126",
+  api_secret = "nALlrStvbAJ0EeXg7Zbx9uKMF68"
+)
 app = FastAPI()
 
 origins = ["*"]

@@ -81,6 +81,7 @@ export default {
                 reader.readAsDataURL(file[0]);
                 this.$emit('input', file[0]);
             }
+
         },
 
         pickFileVerso() {
