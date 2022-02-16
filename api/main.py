@@ -33,7 +33,7 @@ app.add_middleware(
 
 client = pymongo.MongoClient(
     "mongodb+srv://rob:rob123456@cluster0.hv6ea.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
-db = client.test
+db = client.papa_sucre
 
 
 @app.get('/users', response_description="List all users", response_model=List[userModel.User])

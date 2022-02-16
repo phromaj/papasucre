@@ -22,7 +22,7 @@
                 @input="pickFileRecto"
                 id="fileRecto"
                 name="ID-cardRecto"
-                accept="image/png, image/jpg, application/pdf"
+                accept="image/*, application/pdf"
               />
               <label for="fileRecto">Choisissez un fichier</label>
               <p>Recto</p>
@@ -41,7 +41,7 @@
                 @input="pickFileVerso"
                 id="fileVerso"
                 name="ID-cardVerso"
-                accept="image/png, image/jpg, application/pdf"
+                accept="image/*, application/pdf"
               />
               <label for="fileVerso">Choisissez un fichier</label>
               <p>Verso</p>

@@ -36,7 +36,7 @@ export const useSignUpForm = defineStore("signupform", {
           email: this.email,
           password: this.password,
           location: this.location,
-          birth_date: Date.parse(this.birth_date),
+          birth_date: new Date(this.birth_date),
           age: this.age,
           job: this.job,
           description: this.description,
