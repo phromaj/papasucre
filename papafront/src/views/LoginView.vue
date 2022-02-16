@@ -8,7 +8,7 @@ import { RouterLink } from "vue-router";
     <img id="logo" src="../assets/papasucre.png" alt="papasucre-logo" />
     <div class="buttonDiv">
       <div class="signUp">
-        <RouterLink to="/signin" tag="signin">
+        <RouterLink to="/signin">
           <button>
             <Icon
               class="icon"
@@ -21,7 +21,7 @@ import { RouterLink } from "vue-router";
         </RouterLink>
       </div>
       <div class="signIn">
-        <RouterLink to="/signup" tag="signup">
+        <RouterLink to="/signup">
           <button>
             <Icon
               class="icon"
@@ -31,7 +31,7 @@ import { RouterLink } from "vue-router";
             />S'inscrire avec Google
           </button>
         </RouterLink>
-        <RouterLink to="/" tag="signup">
+        <RouterLink to="/">
           <button>
             <Icon
               class="icon"
@@ -41,7 +41,7 @@ import { RouterLink } from "vue-router";
             />S'inscrire avec Facebook
           </button>
         </RouterLink>
-        <RouterLink to="/" tag="signin">
+        <RouterLink to="/">
           <button>
             <Icon
               class="icon"

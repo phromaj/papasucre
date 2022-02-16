@@ -1,3 +1,4 @@
+import ssl
 from typing import List
 
 from fastapi import FastAPI, HTTPException
@@ -5,11 +6,19 @@ import pymongo
 from fastapi.encoders import jsonable_encoder
 from starlette import status
 from starlette.responses import JSONResponse
-
 from models import userModel
+from fastapi.encoders import jsonable_encoder
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.cors import CORSMiddleware
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
+cloudinary.config(
+  cloud_name = "dymxiscr0",
+  api_key = "647379272942126",
+  api_secret = "nALlrStvbAJ0EeXg7Zbx9uKMF68"
+)
 app = FastAPI()
 
 origins = ["*"]
@@ -24,7 +33,7 @@ app.add_middleware(
 
 client = pymongo.MongoClient(
     "mongodb+srv://rob:rob123456@cluster0.hv6ea.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
-db = client.test
+db = client.papa_sucre
 
 
 @app.get('/users', response_description="List all users", response_model=List[userModel.User])
@@ -44,7 +53,17 @@ def show_user(email: str):
 
 @app.post('/users', response_description="Add new user", response_model=userModel.User)
 def create_user(user: userModel.User):
+    # Upload picture on cloudinary
+    upload_profile = cloudinary.uploader.upload(user.profile_picture)
+    # Put cloudinary url in object
+    user.profile_picture = jsonable_encoder(upload_profile)['url']
+    for index, image in enumerate(user.photo_album):
+        upload_picture = cloudinary.uploader.upload(image)
+        # Quand on crée un compte, on index les photos comme on les reçoit dans le formulaire
+        user.photo_album[index] = jsonable_encoder(upload_picture)['url']
+
     db["users"].insert_one(user.dict(by_alias=True))
+
     return JSONResponse(status_code=status.HTTP_201_CREATED, content=jsonable_encoder(user))
 
 

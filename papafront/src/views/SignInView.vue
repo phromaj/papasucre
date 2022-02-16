@@ -21,34 +21,24 @@ import { Icon } from "@iconify/vue";
         </div>
         <div class="password">
           <input
-            v-bind:type="[showPassword ? 'text' : 'password']"
+            :type="type"
             name="password"
             class="input pwdInput"
             v-model="password"
             maxlength="20"
             placeholder="Mot de Passe"
           />
-          <Icon
-            class="togglePwd"
-            icon="ant-design:eye-filled"
-            color="white"
-            width="25"
-            height="25"
-          />
-          <span
-            class="iconify"
-            @click="togglePassword"
-            data-icon="ant-design:eye-filled"
-            style="color: white"
-            data-width="12"
-            data-height="12"
-          ></span>
+          <button class="togglePwd" @click="togglePassword">
+            <Icon icon="ant-design:eye-filled" color="white" width="25" height="25" />
+          </button>
           <p>Error</p>
         </div>
         <div id="pwdForget">
           <a href=""><p>Mot de passe oublié ?</p></a>
         </div>
-        <button type="submit" id="buttonConnect">Connexion</button>
+        <div id="loginButton">
+          <button type="submit" id="buttonConnect">Connexion</button>
+        </div>
       </form>
     </div>
   </div>
@@ -64,15 +54,18 @@ export default {
     return {
       mail: "",
       password: "",
-      showPassword: false,
+      type: 'password',
     };
   },
 
   methods: {
     togglePassword() {
-      let showPassword = false;
-      showPassword != showPassword;
-    },
+      if(this.type === 'password') {
+        this.type = 'text';
+      } else {
+        this.type = 'password';
+      }
+    }
   },
 };
 </script>
@@ -99,11 +92,11 @@ export default {
 
 .email,
 .password {
-  width: 100%;
+  width: 70%;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  margin-bottom: 2em;
+  justify-content: center;
+  margin: 0 auto 2em auto;
 }
 
 .input {
@@ -126,8 +119,13 @@ export default {
 
 .togglePwd {
   position: absolute;
-  left: 90%;
+  left: 88%;
   top: 18%;
+  border: 1px solid transparent;
+  background-color: transparent;
+}
+.togglePwd:focus {
+  outline: none;
 }
 
 #pwdForget {
@@ -139,6 +137,11 @@ export default {
   color: #fff;
 }
 
+#loginButton {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2em;
+}
 #buttonConnect {
   text-decoration: none;
   border: 1px solid #fff;

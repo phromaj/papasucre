@@ -15,10 +15,11 @@
 
               <input
                 v-model="email"
-                type="text"
-                maxlength="30"
+                type="mail"
+                maxlength="25"
                 placeholder="mail@exemple.com"
               />
+              <Icon id="mailIcon" icon="ant-design:mail-outlined" color="white" width="25" height="25" />
             </div>
             <small
               class="error"
@@ -33,10 +34,13 @@
               </div>
               <input
                 v-model="password"
-                type="text"
+                :type="typePwd"
                 maxlength="30"
-                placeholder="Entrez votre mot de passe"
+                placeholder="Mot de passe"
               />
+              <button class="togglePwd" @click="togglePassword">
+                  <Icon icon="ant-design:eye-filled" color="white" width="25" height="25" />
+              </button>
             </div>
             <small
               class="error"
@@ -50,10 +54,13 @@
               </div>
               <input
                 v-model="password_verif"
-                type="text"
+                :type="typePwdCheck"
                 maxlength="30"
-                placeholder="Entrez votre mot de passe"
+                placeholder="Mot de passe"
               />
+              <button class="togglePwd" @click="togglePasswordCheck">
+                  <Icon icon="ant-design:eye-filled" color="white" width="25" height="25" />
+              </button>
             </div>
             <small
               class="error"
@@ -75,27 +82,59 @@
 <script>
 import useVuelidate from "@vuelidate/core";
 import { required, email, sameAs, minLength } from "@vuelidate/validators";
-import { RouterLink, RouterView } from "vue-router";
+import { useSignUpForm } from "../stores/signupform";
+import { Icon } from "@iconify/vue";
 
 export default {
+  components: {
+    Icon,
+  },
+
   setup() {
-    return { v$: useVuelidate() };
+    // instancie le store
+    const store = useSignUpForm();
+    return {
+      v$: useVuelidate(),
+      store,
+    };
   },
   data() {
     return {
       email: "",
       password: "",
       password_verif: "",
+      typePwd: 'password',
+      typePwdCheck: 'password',
     };
   },
   methods: {
+
+    togglePassword() {
+      if(this.typePwd === 'password') {
+        this.typePwd = 'text';
+      } else {
+        this.typePwd = 'password';
+      }
+    },
+
+    togglePasswordCheck() {
+      if(this.typePwdCheck === 'password') {
+        this.typePwdCheck = 'text';
+      } else {
+        this.typePwdCheck = 'password';
+      }
+    },
+
     // submit the form to our backend api
-    async submitForm() {
-      console.log(this.email);
-      console.log(this.password);
-      console.log(this.password_verif);
+    submitForm() {
       this.v$.$touch();
       if (this.v$.$error) return;
+      // complète l'utilisateur dans le store au fur et au mesure
+      this.store.$patch((state) => {
+        (state.email = this.email), (state.password = this.password);
+      });
+      console.log(this.store.$state);
+      // methode pour poster un utilisateur dans l'api
       this.$router.push("/signup-info");
     },
   },
@@ -138,6 +177,10 @@ body {
   line-height: 1.2;
 }
 
+#mailIcon {
+  position: relative;
+  right: 7%;
+}
 .passwordTitle {
   width: 65%;
   color: rgb(255, 255, 255);
@@ -158,6 +201,13 @@ body {
 .password {
   padding-top: 6%;
   width: 100%;
+}
+
+.togglePwd {
+  position: relative;
+  right: 8%;
+  border: 1px solid transparent;
+  background-color: transparent;
 }
 .information {
   width: 100%;

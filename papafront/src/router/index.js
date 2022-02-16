@@ -24,9 +24,24 @@ const router = createRouter({
       component: () => import("../views/SignUpInfoView.vue"),
     },
     {
+      path: "/signup-profile",
+      name: "signinprofile",
+      component: () => import("../views/SignUpProfileView.vue"),
+    },
+    {
       path: "/signin",
       name: "signin",
       component: () => import("../views/SignInView.vue"),
+    },
+    {
+      path: "/docUpload",
+      name: "docupload",
+      component: () => import("../views/SignUpDocUpload.vue"),
+    },
+    {
+      path: "/upload-profile-pic",
+      name: "UploadProfilePic",
+      component: () => import("../views/SignUpUploadProfile.vue"),
     },
   ],
 });

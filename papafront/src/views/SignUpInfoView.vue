@@ -1,86 +1,85 @@
-<script setup>
-import { Icon } from "@iconify/vue";
-
-import { RouterLink, RouterView } from "vue-router";
-</script>
-
 <template>
-  <body>
-    <div class="signin">
-      <div id="logo">
-        <img src="../assets/PAPASUCRE.png" alt="papasucre-logo" />
-      </div>
-      <div id="information">
-        <div id="title">
-          <h1>Mes informations</h1>
-        </div>
-        <form @submit.prevent="submitForm">
-          <input
-            class="text-input"
-            v-model="full_name"
-            type="text"
-            maxlength="30"
-            placeholder="Nom Prénom"
-          />
-          <p>
-            Voici comment il apparaîtra sur PapaSucré. Attention, tu ne pourras
-            pas le modifier.
-          </p>
-          <div id="gender">
-            <h2>Je suis un-e</h2>
-            <div class="selectGender">
-              <input
-                :class="{ active: maleActive }"
-                type="button"
-                @click="getButtonValue"
-                value="male"
-                id="male"
-                autocomplete="off"
-              />
-              <input
-                :class="{ active: femaleActive }"
-                type="button"
-                @click="getButtonValue"
-                value="female"
-                id="female"
-              />
-              <!--<Icon  value="female" class="genderIcon" icon="mdi:gender-female" color="#2d2d2d" width="32" height="32" />-->
-            </div>
-          </div>
-          <div id="birth">
-            <div id="birthTitle">
-              <h2>Date d'anniversaire</h2>
-            </div>
-            <span class="datepicker-toggle">
-              <span class="datepicker-toggle-button"></span>
-              <input
-                type="date"
-                class="datepicker-input"
-                v-model="user_birthdate"
-              />
-            </span>
-            <p>Votre âge sera visible par tous.</p>
-          </div>
-          <div id="continueButton">
-            <button type="submit" id="continue">Continuer</button>
-          </div>
-        </form>
-      </div>
+<body>
+  <div class="signin">
+    <div id="logo">
+      <img src="../assets/PAPASUCRE.png" alt="papasucre-logo" />
     </div>
-  </body>
+    <div id="information">
+      <div id="title">
+        <h1>Mes informations</h1>
+      </div>
+      <form @submit.prevent="submitForm">
+        <input
+          class="text-input"
+          v-model="name"
+          type="text"
+          maxlength="30"
+          placeholder="Nom Prénom"
+        />
+        <p>
+          Voici comment il apparaîtra sur PapaSucré. Attention, tu ne pourras
+          pas le modifier.
+        </p>
+        <div id="gender">
+          <h2>Je suis un-e</h2>
+          <div class="selectGender">
+            <input
+              :class="{ active: maleActive }"
+              type="button"
+              @click="getButtonValue"
+              value="male"
+              id="male"
+              autocomplete="off"
+            />
+            <input
+              :class="{ active: femaleActive }"
+              type="button"
+              @click="getButtonValue"
+              value="female"
+              id="female"
+            />
+            <!--<Icon  value="female" class="genderIcon" icon="mdi:gender-female" color="#2d2d2d" width="32" height="32" />-->
+          </div>
+        </div>
+        <div id="birth">
+          <div id="birthTitle">
+            <h2>Date d'anniversaire</h2>
+          </div>
+          <span class="datepicker-toggle">
+            <span class="datepicker-toggle-button"></span>
+            <input type="date" class="datepicker-input" v-model="birth_date" />
+          </span>
+          <p>Votre âge sera visible par tous.</p>
+        </div>
+        <div id="continueButton">
+          <button type="submit" id="continue">Continuer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
 </template>
 
 <script>
+import { useSignUpForm } from "../stores/signupform";
+import { required, } from "@vuelidate/validators";
+import useVuelidate from "@vuelidate/core";
 export default {
+  setup() {
+    // instancie le store
+    const store = useSignUpForm();
+    return {
+      v$: useVuelidate(),
+      store,
+    };
+  },
   data() {
     return {
-      full_name: "",
-      email: "",
-      password: "",
-      gender: "",
-      user_birthdate: "",
+      name: "",
+      sex: "",
       femaleActive: false,
       maleActive: false,
+      birth_date: "",
     };
   },
   methods: {
@@ -92,30 +91,31 @@ export default {
         this.maleActive = true;
         this.femaleActive = false;
       }
-      this.gender = event.target.value;
+      this.sex = event.target.value;
     },
-    toggleAndChooseGender() {},
     // submit the form to our backend api
-    async submitForm() {
-      const res = await fetch("http://127.0.0.1:8000/users", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-
-        // pass in the information from our form
-        body: JSON.stringify({
-          name: this.full_name,
-          username: "string",
-          email: "string",
-          password: "string",
-          location: "string",
-          birth_date: new Date(this.user_birthdate),
-          age: 0,
-          job: "string",
-          phone_number: "string",
-          sex: this.gender,
-        }),
+    submitForm() {
+      this.v$.$touch();
+      if (this.v$.$error) return;
+      let user_age = (new Date().getFullYear() - new Date(this.birth_date).getFullYear())
+      // complète l'utilisateur dans le store au fur et au mesure
+      this.store.$patch((state) => {
+        (state.name = this.name), (state.sex = this.sex), (state.birth_date = this.birth_date), (state.age = user_age);
       });
+      console.log(this.store.$state);
+      // methode pour poster un utilisateur dans l'api
+      //this.store.postUser();
+      this.$router.push("/signup-profile");
     },
+  },
+  validations() {
+    return {
+      name: { required },
+      sex: { required },
+      femaleActive: false,
+      maleActive: false,
+      birth_date: { required },
+    };
   },
 };
 </script>
