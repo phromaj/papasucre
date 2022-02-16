@@ -1,16 +1,16 @@
 <template>
     <div class="card">
         <div @click="flipCard" class="card-inner">
-            <div class="card-front">
+            <div class="card-front" :style="bgImage">
                 <div class="user-info">
-                    <div class="user-info-personal">Mélina 28</div>
+                    <div class="user-info-personal">{{user.name}} {{user.age}}</div>
                     <div class="user-info-job line-container">
                         <Icon class="icon-container" icon="bytesize:work" />
-                        <p class="text-info">Chef d'entreprise</p>
+                        <p class="text-info">{{user.job}}</p>
                     </div>
                     <div class="user-info-town line-container">
                         <Icon class="icon-container" icon="bi:geo-alt" />
-                        <p class="text-info">Paris</p>
+                        <p class="text-info">{{user.location}}</p>
                     </div>
                 </div>
             </div>
@@ -28,7 +28,13 @@ export default {
         Icon,
     },
     props: {
-        title: String
+        title: String,
+        user: Object,
+    },
+    computed: {
+        bgImage(){
+            return 'background-image : url(' + this.user.profile_picture + ');'
+        }
     },
     methods: {
         flipCard(event){
@@ -58,7 +64,6 @@ export default {
 .card-front {
     display: flex;
     flex-direction: column;
-    background-image: url("https://picsum.photos/600/800");
     background-size: cover;
     box-shadow: inset 0px -100px 28px -12px rgba(0, 0, 0, 0.4);
     justify-content: flex-end;

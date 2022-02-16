@@ -12,29 +12,9 @@
                 @swiper="onSwiper"
                 @slideChange="onSlideChange"
             >
-                <swiper-slide>
+                <swiper-slide v-for="(user, index) in userList" :key="index">
                     <div class="card-container">
-                        <TinderCard title="Slide 1" />
-                    </div>
-                </swiper-slide>
-                <swiper-slide>
-                    <div class="card-container">
-                        <TinderCard title="Slide 1" />
-                    </div>
-                </swiper-slide>
-                <swiper-slide>
-                    <div class="card-container">
-                        <TinderCard title="Slide 1" />
-                    </div>
-                </swiper-slide>
-                <swiper-slide>
-                    <div class="card-container">
-                        <TinderCard title="Slide 1" />
-                    </div>
-                </swiper-slide>
-                <swiper-slide>
-                    <div class="card-container">
-                        <TinderCard title="Slide 1" />
+                        <TinderCard :user="user"  title="Slide 1" />
                     </div>
                 </swiper-slide>
             </swiper>
@@ -43,6 +23,7 @@
                 <button
                     @touchstart="dislikeHoverColorChange"
                     @touchend="leaveColorChange"
+                    @click="checkusers"
                     class="slider-button dislike-button"
                     :class="'swipe-next'"
                 >
@@ -70,6 +51,11 @@ import TinderCard from './TinderCardComponent.vue';
 import { Icon } from "@iconify/vue";
 import { RouterLink } from "vue-router";
 
+// Import stores
+import { userFeedStore } from "../stores/userFeedStore.js";
+
+
+
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -79,6 +65,17 @@ import 'swiper/css/effect-cube';
 
 // Import Swiper styles
 export default {
+    setup() {
+        // instancie le store
+        const store = userFeedStore();
+        store.getUserList()
+        const userList = store.$state.userList
+        console.log(userList)
+        return {
+            store,
+            userList
+        };
+    },
     components: {
         Swiper,
         SwiperSlide,
@@ -87,6 +84,9 @@ export default {
         RouterLink,
     },
     methods: {
+        checkusers() {
+            console.log(this.userList)
+        },
         likeHoverColorChange() {
             let cards = document.getElementsByClassName("card-front");
             for (let index = 0; index < cards.length; index++) {
@@ -115,7 +115,7 @@ export default {
             this.$refs.swiper.$swiper.slideNext()
         },
         onSwiper(swiper) {
-            console.log(swiper);
+            //console.log(swiper);
         },
         onSlideChange(swiper) {
             console.log('slide change');
@@ -129,8 +129,7 @@ export default {
                 nextEl: '.swipe-next',
                 prevEl: '.__prev'
             },
-
-
+            userList: this.store.userList
         }
     },
 };
