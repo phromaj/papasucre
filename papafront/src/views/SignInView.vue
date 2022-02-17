@@ -1,12 +1,9 @@
-<script setup>
-import { Icon } from "@iconify/vue";
-</script>
 
 <template>
   <div class="SignInPage">
     <img id="logo" src="../assets/papasucre.png" alt="papasucre-logo" />
     <div class="signIn">
-      <form @submit.prevent="submitFormSignIn">
+      <form @submit.prevent="submitForm">
         <p id="connect">Connexion</p>
         <div class="email">
           <input
@@ -29,17 +26,14 @@ import { Icon } from "@iconify/vue";
             placeholder="Mot de Passe"
           />
           <button class="togglePwd" @click="togglePassword">
-            <Icon
-              icon="ant-design:eye-filled"
-              color="white"
-              width="25"
-              height="25"
-            />
+            <Icon icon="ant-design:eye-filled" color="white" width="25" height="25" />
           </button>
           <p>Error</p>
         </div>
         <div id="pwdForget">
-          <a href=""><p>Mot de passe oublié ?</p></a>
+          <a href>
+            <p>Mot de passe oublié ?</p>
+          </a>
         </div>
         <div id="loginButton">
           <button type="submit" id="buttonConnect">Connexion</button>
@@ -50,7 +44,18 @@ import { Icon } from "@iconify/vue";
 </template>
 
 <script>
+// Import stores
+import { useAuthStore } from "../stores/authStore.js";
+import { Icon } from "@iconify/vue";
+
 export default {
+  setup() {
+    // instancie le store
+    const auth = useAuthStore();
+    return {
+      auth,
+    };
+  },
   components: {
     Icon,
   },
@@ -71,8 +76,16 @@ export default {
         this.type = "password";
       }
     },
-    submitForm(){
-      
+    async submitForm() {
+      this.auth.$patch((state) => {
+        (state.user.email = this.mail),
+        (state.user.password = this.password);
+      });
+      //this.auth.user.email = this.mail
+      //this.auth.user.password = this.password
+      await this.auth.login()
+      await this.auth.authenticate()
+      this.$router.push('/feed')
     }
   },
 };

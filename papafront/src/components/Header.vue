@@ -32,7 +32,8 @@ export default {};
 </script>
 <style scoped>
 #navbar {
-  padding-top: 5%;
+  padding-top: 3vh;
+  padding-bottom: 1vh;
   width: 100%;
   display: flex;
   justify-content: space-evenly;

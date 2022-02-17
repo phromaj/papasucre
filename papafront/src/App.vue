@@ -11,8 +11,8 @@ import { RouterView } from "vue-router";
 
 body {
   background: linear-gradient(#472709, #241303);
-  background-repeat: no-repeat;
-  background-position: fixed;
-  width: 100%;
+}
+button{
+  cursor: pointer;
 }
 </style>
