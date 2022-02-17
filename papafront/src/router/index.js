@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { useAuthStore } from "../stores/authStore.js";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -11,7 +12,20 @@ const router = createRouter({
     {
       path: "/feed",
       name: "feed",
+      beforeEnter: (to, from) => {
+        // reject the navigation
+        const auth = useAuthStore();
+
+        if (auth.$state.isAuthenticated) {
+          console.log(auth.$state.isAuthenticated)
+          return true
+        }
+        console.log(auth.$state.isAuthenticated)
+
+        return '/signin'
+      },
       component: () => import("../views/FeedView.vue"),
+
     },
     {
       path: "/signup",
