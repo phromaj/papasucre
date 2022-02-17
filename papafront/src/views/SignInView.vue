@@ -71,6 +71,9 @@ export default {
         this.type = "password";
       }
     },
+    submitForm(){
+      
+    }
   },
 };
 </script>

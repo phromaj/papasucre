@@ -132,3 +132,19 @@ def delete_user(email: str):
         return JSONResponse(status_code=200, content="deleted")
 
     raise HTTPException(status_code=404, detail=f"user {email} not found")
+
+
+@app.get('/like-user/{user_email}/{liked_user_email}', response_description="Like user")
+def like_user(user_email: str, liked_user_email: str):
+    if db.users.find_one({"email": liked_user_email}) != 0:
+        user_connected = db.users.find_one({"email": user_email})
+        if liked_user_email not in user_connected['liked_user_list']:
+            if user_connected['liked_user_list'][0] == '':
+                user_connected['liked_user_list'][0] = liked_user_email
+            else :
+                user_connected['liked_user_list'].append(liked_user_email)
+                update_result = db["users"].update_one({"email": user_email}, {"$set": user_connected})
+                return JSONResponse(status_code=200, content=f"User {liked_user_email} has been liked")
+        raise HTTPException(status_code=404, detail=f"user {liked_user_email} already liked by {user_email}")
+    else:
+        raise HTTPException(status_code=404, detail=f"user {user_email} not found")
