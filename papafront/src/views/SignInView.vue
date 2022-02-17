@@ -29,7 +29,12 @@ import { Icon } from "@iconify/vue";
             placeholder="Mot de Passe"
           />
           <button class="togglePwd" @click="togglePassword">
-            <Icon icon="ant-design:eye-filled" color="white" width="25" height="25" />
+            <Icon
+              icon="ant-design:eye-filled"
+              color="white"
+              width="25"
+              height="25"
+            />
           </button>
           <p>Error</p>
         </div>
@@ -54,17 +59,20 @@ export default {
     return {
       mail: "",
       password: "",
-      type: 'password',
+      type: "password",
     };
   },
 
   methods: {
     togglePassword() {
-      if(this.type === 'password') {
-        this.type = 'text';
+      if (this.type === "password") {
+        this.type = "text";
       } else {
-        this.type = 'password';
+        this.type = "password";
       }
+    },
+    submitForm(){
+      
     }
   },
 };
