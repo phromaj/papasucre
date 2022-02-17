@@ -1,26 +1,23 @@
 <template lang="">
-    <div>
-        <UploadPicture />
-    </div>
+  <div>
+    <UploadPicture />
+  </div>
 </template>
 <script>
 import { useSignUpForm } from "../stores/signupform";
-import UploadPicture  from "@/components/UploadPictureComponent.vue";
-
+import UploadPicture from "@/components/UploadPictureComponent.vue";
 
 export default {
-    setup() {
+  setup() {
     // instancie le store
-        const store = useSignUpForm();
-        return {
-        store,
-        }
-    },
-    components: {
-        UploadPicture,
-    }
-}
+    const store = useSignUpForm();
+    return {
+      store,
+    };
+  },
+  components: {
+    UploadPicture,
+  },
+};
 </script>
-<style lang="">
-    
-</style>
+<style lang=""></style>

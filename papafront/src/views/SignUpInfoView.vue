@@ -1,95 +1,102 @@
 <template>
-<body>
-  <div class="signin">
-    <div id="logo">
-      <img src="../assets/PAPASUCRE.png" alt="papasucre-logo" />
-    </div>
-    <div id="information">
-      <div id="title">
-        <h1>Mes informations</h1>
+  <body>
+    <div class="signin">
+      <div id="logo">
+        <img src="../assets/PAPASUCRE.png" alt="papasucre-logo" />
       </div>
-      <form @submit.prevent="submitForm">
-        <div class="container">
-          <div class="inputName">
-            <input
-              class="text-input"
-              v-model="name"
-              type="text"
-              maxlength="20"
-              placeholder="Nom Prénom"
-            />
-            <div>
-            <small  class="error"
-                    v-for="(error, index) of v$.name.$errors"
-                    :key="index"
-                    >{{ error.$message }}</small
-            >
-            </div>
-          </div>
+      <div id="information">
+        <div id="title">
+          <h1>Mes informations</h1>
         </div>
-        <p>
-          Voici comment il apparaîtra sur PapaSucré. Attention, tu ne pourras
-          pas le modifier.
-        </p>
-        <div id="gender">
-          <h2>Je suis un-e</h2>
-          <div class="selectGender">
-            <input
-              :class="{ active: maleActive }"
-              type="button"
-              @click="getButtonValue"
-              value="male"
-              id="male"
-              autocomplete="off"
-            />
-            <input
-              :class="{ active: femaleActive }"
-              type="button"
-              @click="getButtonValue"
-              value="female"
-              id="female"
-            />
-           </div>
-            <div>
-            <small  class="error genderError"
-                    v-for="(error, index) of v$.sex.$errors"
-                    :key="index"
-                >{{ error.$message }}</small
-            >
-          </div>
-          </div>
-        <div class="containerBirth">
-          <div id="birth">
-            <div id="birthTitle">
-              <h2>Date d'anniversaire</h2>
-            </div>
-            <span class="datepicker-toggle">
-              <span class="datepicker-toggle-button"></span>
-              <input type="date" class="datepicker-input" v-model="birth_date" />
-            </span>
-          </div>
-          <div>
-            <small  class="error"
-                    v-for="(error, index) of v$.birth_date.$errors"
-                    :key="index"
+        <form @submit.prevent="submitForm">
+          <div class="container">
+            <div class="inputName">
+              <input
+                class="text-input"
+                v-model="name"
+                type="text"
+                maxlength="20"
+                placeholder="Nom Prénom"
+              />
+              <div>
+                <small
+                  class="error"
+                  v-for="(error, index) of v$.name.$errors"
+                  :key="index"
                   >{{ error.$message }}</small
-            >
+                >
+              </div>
+            </div>
           </div>
-        </div>
-        
-         <p>Votre âge sera visible par tous.</p>
-        <div id="continueButton">
-          <button type="submit" id="continue">Continuer</button>
-        </div>
-      </form>
+          <p>
+            Voici comment il apparaîtra sur PapaSucré. Attention, tu ne pourras
+            pas le modifier.
+          </p>
+          <div id="gender">
+            <h2>Je suis un-e</h2>
+            <div class="selectGender">
+              <input
+                :class="{ active: maleActive }"
+                type="button"
+                @click="getButtonValue"
+                value="male"
+                id="male"
+                autocomplete="off"
+              />
+              <input
+                :class="{ active: femaleActive }"
+                type="button"
+                @click="getButtonValue"
+                value="female"
+                id="female"
+              />
+            </div>
+            <div>
+              <small
+                class="error genderError"
+                v-for="(error, index) of v$.sex.$errors"
+                :key="index"
+                >{{ error.$message }}</small
+              >
+            </div>
+          </div>
+          <div class="containerBirth">
+            <div id="birth">
+              <div id="birthTitle">
+                <h2>Date d'anniversaire</h2>
+              </div>
+              <span class="datepicker-toggle">
+                <span class="datepicker-toggle-button"></span>
+                <input
+                  type="date"
+                  class="datepicker-input"
+                  v-model="birth_date"
+                />
+              </span>
+            </div>
+            <div>
+              <small
+                class="error"
+                v-for="(error, index) of v$.birth_date.$errors"
+                :key="index"
+                >{{ error.$message }}</small
+              >
+            </div>
+          </div>
+
+          <p>Votre âge sera visible par tous.</p>
+          <div id="continueButton">
+            <button type="submit" id="continue">Continuer</button>
+          </div>
+        </form>
+      </div>
     </div>
-  </div>
-</body>
+  </body>
 </template>
 
 <script>
 import { useSignUpForm } from "../stores/signupform";
-import { helpers, minLength, required, } from "@vuelidate/validators";
+import { helpers, minLength, required } from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
 export default {
   setup() {
@@ -124,10 +131,14 @@ export default {
     submitForm() {
       this.v$.$touch();
       if (this.v$.$error) return;
-      let user_age = (new Date().getFullYear() - new Date(this.birth_date).getFullYear())
+      let user_age =
+        new Date().getFullYear() - new Date(this.birth_date).getFullYear();
       // complète l'utilisateur dans le store au fur et au mesure
       this.store.$patch((state) => {
-        (state.name = this.name), (state.sex = this.sex), (state.birth_date = this.birth_date), (state.age = user_age);
+        (state.name = this.name),
+          (state.sex = this.sex),
+          (state.birth_date = this.birth_date),
+          (state.age = user_age);
       });
       console.log(this.store.$state);
       // methode pour poster un utilisateur dans l'api
@@ -138,20 +149,28 @@ export default {
   validations() {
     return {
       name: {
-        required: helpers.withMessage('Veuillez renseignez votre Nom', required),
+        required: helpers.withMessage(
+          "Veuillez renseignez votre Nom",
+          required
+        ),
         minLength: helpers.withMessage(
-          ({
-            $params
-          }) => `Votre nom doit comporter au minimum ${$params.min} caractères`,
-          minLength(3),
-          )
+          ({ $params }) =>
+            `Votre nom doit comporter au minimum ${$params.min} caractères`,
+          minLength(3)
+        ),
       },
-      sex: { 
-        required: helpers.withMessage('Veuillez renseignez votre genre', required)
-        },
-      birth_date: { 
-        required: helpers.withMessage('Veuillez renseignez votre date de naissance', required)
-        },
+      sex: {
+        required: helpers.withMessage(
+          "Veuillez renseignez votre genre",
+          required
+        ),
+      },
+      birth_date: {
+        required: helpers.withMessage(
+          "Veuillez renseignez votre date de naissance",
+          required
+        ),
+      },
       femaleActive: false,
       maleActive: false,
     };

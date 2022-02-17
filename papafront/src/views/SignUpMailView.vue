@@ -6,7 +6,7 @@
           <img src="../assets/PAPASUCRE.png" alt="papasucre-logo" />
         </div>
         <div class="information">
-          <h1>Informations <br>Personnelles</h1>
+          <h1>Informations <br />Personnelles</h1>
           <form @submit.prevent="submitForm">
             <div class="container">
               <div class="mail">
@@ -20,7 +20,13 @@
                   maxlength="20"
                   placeholder="mail@exemple.com"
                 />
-                <Icon id="mailIcon" icon="ant-design:mail-outlined" color="white" width="25" height="25" />
+                <Icon
+                  id="mailIcon"
+                  icon="ant-design:mail-outlined"
+                  color="white"
+                  width="25"
+                  height="25"
+                />
               </div>
               <small
                 class="error"
@@ -29,7 +35,7 @@
                 >{{ error.$message }}</small
               >
             </div>
-            
+
             <div class="container containPwd">
               <div class="password">
                 <div class="passwordTitle">
@@ -42,7 +48,12 @@
                   placeholder="Mot de passe"
                 />
                 <button class="togglePwd" @click="togglePassword">
-                    <Icon icon="ant-design:eye-filled" color="white" width="25" height="25" />
+                  <Icon
+                    icon="ant-design:eye-filled"
+                    color="white"
+                    width="25"
+                    height="25"
+                  />
                 </button>
               </div>
               <small
@@ -64,7 +75,12 @@
                   placeholder="Mot de passe"
                 />
                 <button class="togglePwd" @click="togglePasswordCheck">
-                    <Icon icon="ant-design:eye-filled" color="white" width="25" height="25" />
+                  <Icon
+                    icon="ant-design:eye-filled"
+                    color="white"
+                    width="25"
+                    height="25"
+                  />
                 </button>
               </div>
               <small
@@ -74,7 +90,7 @@
                 >{{ error.$message }}</small
               >
             </div>
-            
+
             <div class="continueButton">
               <button type="submit" class="continue">
                 <span>Continuer</span>
@@ -88,11 +104,16 @@
 </template>
 <script>
 import useVuelidate from "@vuelidate/core";
-import { required, email, sameAs, minLength, maxLength, helpers} from "@vuelidate/validators";
+import {
+  required,
+  email,
+  sameAs,
+  minLength,
+  maxLength,
+  helpers,
+} from "@vuelidate/validators";
 import { useSignUpForm } from "../stores/signupform";
 import { Icon } from "@iconify/vue";
-
-
 
 export default {
   components: {
@@ -112,25 +133,24 @@ export default {
       email: "",
       password: "",
       password_verif: "",
-      typePwd: 'password',
-      typePwdCheck: 'password',
+      typePwd: "password",
+      typePwdCheck: "password",
     };
   },
   methods: {
-
     togglePassword() {
-      if(this.typePwd === 'password') {
-        this.typePwd = 'text';
+      if (this.typePwd === "password") {
+        this.typePwd = "text";
       } else {
-        this.typePwd = 'password';
+        this.typePwd = "password";
       }
     },
 
     togglePasswordCheck() {
-      if(this.typePwdCheck === 'password') {
-        this.typePwdCheck = 'text';
+      if (this.typePwdCheck === "password") {
+        this.typePwdCheck = "text";
       } else {
-        this.typePwdCheck = 'password';
+        this.typePwdCheck = "password";
       }
     },
 
@@ -150,29 +170,30 @@ export default {
   validations() {
     return {
       email: {
-        required: helpers.withMessage('Veuillez renseigner un email', required),
+        required: helpers.withMessage("Veuillez renseigner un email", required),
         email: helpers.withMessage(
           ({}) => `Veuillez renseignez un email correct.`,
-            email,
-          ),
-          
+          email
+        ),
       },
       password: {
-        required: helpers.withMessage('Veuillez renseigner un mot de passe', required),
+        required: helpers.withMessage(
+          "Veuillez renseigner un mot de passe",
+          required
+        ),
         minLength: helpers.withMessage(
-          ({
-            $params
-          }) => `Le mot de passe doit contenir au minimum ${$params.min} caractères.`,
-          minLength(8),
-          ),
-        },
+          ({ $params }) =>
+            `Le mot de passe doit contenir au minimum ${$params.min} caractères.`,
+          minLength(8)
+        ),
+      },
       password_verif: {
         //required: helpers.withMessage('Veuillez renseignez à nouveau votre mot de passe.', required),
         sameAsPassword: helpers.withMessage(
           ({}) => `Le mot de passe doit correspondre à celui créer.`,
-          sameAs(this.password),
-          )
-      }
+          sameAs(this.password)
+        ),
+      },
     };
   },
 };
@@ -239,7 +260,6 @@ body {
 }
 .password {
   width: 100%;
-  
 }
 
 .togglePwd {
