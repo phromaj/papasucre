@@ -43,6 +43,11 @@ const router = createRouter({
       name: "UploadProfilePic",
       component: () => import("../views/SignUpUploadProfile.vue"),
     },
+    {
+      path: "/profile",
+      name: "profile",
+      component: () => import("../views/ProfileView.vue"),
+    },
   ],
 });
 
