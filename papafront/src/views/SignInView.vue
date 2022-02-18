@@ -20,6 +20,7 @@
             :type="typePwd"
             name="password"
             class="input pwdInput"
+            onkeydown="if(event.keyCode==32) return false;"
             v-model="password"
             maxlength="12"
             placeholder="Mot de Passe"

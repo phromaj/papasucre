@@ -17,7 +17,8 @@
                 <input
                   v-model="email"
                   type="mail"
-                  maxlength="20"
+                  maxlength="30"
+                  onkeydown="if(event.keyCode==32) return false;"
                   placeholder="mail@exemple.com"
                 />
                 <Icon
@@ -44,6 +45,7 @@
                 <input
                   v-model="password"
                   :type="typePwd"
+                  onkeydown="if(event.keyCode==32) return false;"
                   maxlength="12"
                   placeholder="Mot de passe"
                 />
@@ -71,6 +73,7 @@
                 <input
                   v-model="password_verif"
                   :type="typePwdCheck"
+                  onkeydown="if(event.keyCode==32) return false;"
                   maxlength="12"
                   placeholder="Mot de passe"
                 />
