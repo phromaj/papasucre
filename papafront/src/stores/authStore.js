@@ -13,7 +13,7 @@ export const useAuthStore = defineStore({
 
     actions: {
         async login(userForm) {
-            let result = await axios.post('http://127.0.0.1:8000/user-login', {
+            let result = await axios.post('https://papasucre.herokuapp.com/user-login', {
                 email: userForm.email,
                 password: userForm.password
             })
@@ -21,14 +21,14 @@ export const useAuthStore = defineStore({
           
         },
         async authenticate(user_mail){
-            let response = await axios.get('http://127.0.0.1:8000/protected', {
+            let response = await axios.get('https://papasucre.herokuapp.com/protected', {
                 headers: {
                     Authorization: `Bearer ${this.token}`
                 }
             })
             if(response.status == 200){
                 this.isAuthenticated = true
-                let user_response = await axios.get('http://127.0.0.1:8000/users/' + user_mail)
+                let user_response = await axios.get('https://papasucre.herokuapp.com/users/' + user_mail)
                 this.user = user_response.data
                 console.log(this.user)
             

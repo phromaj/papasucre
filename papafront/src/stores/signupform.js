@@ -26,7 +26,7 @@ export const useSignUpForm = defineStore("signupform", {
   actions: {
     postUser() {
       console.log(this.email);
-      fetch("http://127.0.0.1:8000/users", {
+      fetch("https://papasucre.herokuapp.com/users", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         // pass in the information from our form
