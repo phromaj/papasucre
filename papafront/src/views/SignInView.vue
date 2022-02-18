@@ -7,28 +7,26 @@
         <p id="connect">Connexion</p>
         <div class="email">
           <input
-            type="email"
+            :type="typeEmail"
             name="email"
             class="input emailInput"
             v-model="email"
             maxlength="30"
             placeholder="Email"
           />
-          <p>Error</p>
         </div>
         <div class="password">
           <input
-            :type="type"
+            :type="typePwd"
             name="password"
             class="input pwdInput"
             v-model="password"
-            maxlength="20"
+            maxlength="12"
             placeholder="Mot de Passe"
           />
           <button class="togglePwd" @click="togglePassword">
             <Icon icon="ant-design:eye-filled" color="white" width="25" height="25" />
           </button>
-          <p>Error</p>
         </div>
         <div id="pwdForget">
           <a href>
@@ -64,11 +62,13 @@ export default {
     return {
       email: "",
       password: "",
-      type: "password",
+      typeEmail: "email",
+      typePwd: "password",
     };
   },
 
   methods: {
+    
     togglePassword() {
       if (this.type === "password") {
         this.type = "text";
@@ -89,7 +89,7 @@ export default {
 
 
       } catch (error) {
-        alert("Your credentials are invalid")
+        alert("Vos identifiants sont incorrects")
       }
       this.$router.push('/feed')
     }

@@ -2,7 +2,7 @@
   <body>
     <div class="signin">
       <div id="logo">
-        <img src="../assets/PAPASUCRE.png" alt="papasucre-logo" />
+        <img src="../assets/papasucre.png" alt="papasucre-logo" />
       </div>
       <div id="information">
         <div id="title">
