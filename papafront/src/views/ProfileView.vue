@@ -29,7 +29,7 @@
         <div class="information">
             <div class="nameAndAge">
                 <span>{{ this.user.name}}</span><br>
-                <span>{{ this.user.age }}</span>
+                <span>{{ this.user.age }} ans</span>
             </div>
             <div id="separator">
 
@@ -59,6 +59,10 @@ export default {
             user
         };
     },
+    components: {
+        Icon,
+        RouterLink
+    }
 
 }
 </script>

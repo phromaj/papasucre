@@ -9,8 +9,8 @@ export const userFeedStore = defineStore({
   }),
 
   actions: {
-    async getUserList() {
-      let result = await axios.get('http://127.0.0.1:8000/users')
+    async getUserList(user) {
+      let result = await axios.get('http://127.0.0.1:8000/users/sex/' + user.sex)
       result.data.forEach(element => {
         this.userList.push(element)
       });

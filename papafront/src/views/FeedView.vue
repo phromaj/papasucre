@@ -1,8 +1,7 @@
 <template lang="">
   <div>
-    <Header />
-    <Tinder />
-
+    <Header :user="user" />
+    <Tinder :user="user" />
   </div>
 </template>
 <script>
@@ -15,6 +14,15 @@ import { useRouter, useRoute } from 'vue-router'
 
 
 export default {
+   setup() {
+        // instancie le store
+        const authStore = useAuthStore();
+        const user = authStore.$state.user
+        return {
+            authStore,
+            user
+        };
+    },
  
   name: "FeedView",
   components: {

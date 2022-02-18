@@ -65,11 +65,15 @@ import 'swiper/css/effect-cube';
 
 // Import Swiper styles
 export default {
-    setup() {
+    props: {
+        user: Object,
+    },
+    setup(props) {
         // instancie le store
         const store = userFeedStore();
-        store.getUserList()
+        store.getUserList(props.user)
         const userList = store.$state.userList
+        
         return {
             store,
             userList

@@ -13,7 +13,6 @@ export const useAuthStore = defineStore({
 
     actions: {
         async login(userForm) {
-            console.log(userForm)
             let result = await axios.post('http://127.0.0.1:8000/user-login', {
                 email: userForm.email,
                 password: userForm.password
@@ -31,6 +30,7 @@ export const useAuthStore = defineStore({
                 this.isAuthenticated = true
                 let user_response = await axios.get('http://127.0.0.1:8000/users/' + user_mail)
                 this.user = user_response.data
+                console.log(this.user)
             
             }
             else {

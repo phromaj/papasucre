@@ -66,6 +66,20 @@ def list_users():
     return users
 
 
+@app.get('/users/sex/{sex}', response_description="List all users", response_model=List[userModel.User])
+def list_users_by_sex(sex: str):
+    users = []
+    if sex == "female":
+        for user in db.users.find({"sex": "male"}):
+            users.append(user)
+        return users
+    else :
+        for user in db.users.find({"sex": "female"}):
+            users.append(user)
+        return users
+
+
+
 @app.get("/users/{email}", response_description="Get a single user", response_model=userModel.User)
 def show_user(email: str):
     if (user := db.users.find_one({"email": email})) is not None:
@@ -141,7 +155,7 @@ def like_user(user_email: str, liked_user_email: str):
         if liked_user_email not in user_connected['liked_user_list']:
             if user_connected['liked_user_list'][0] == '':
                 user_connected['liked_user_list'][0] = liked_user_email
-            else :
+            else:
                 user_connected['liked_user_list'].append(liked_user_email)
                 update_result = db["users"].update_one({"email": user_email}, {"$set": user_connected})
                 return JSONResponse(status_code=200, content=f"User {liked_user_email} has been liked")
