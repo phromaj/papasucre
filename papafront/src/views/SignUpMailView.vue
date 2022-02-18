@@ -3,7 +3,7 @@
     <body>
       <div class="signup">
         <div id="logo">
-          <img src="../assets/PAPASUCRE.png" alt="papasucre-logo" />
+          <img src="../assets/papasucre.png" alt="papasucre-logo" />
         </div>
         <div class="information">
           <h1>Informations <br />Personnelles</h1>
