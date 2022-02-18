@@ -257,7 +257,7 @@ p {
   width: 100%;
   color: rgb(255, 255, 255);
   height: 12em;
-  padding-top: 4%;
+  padding-top: 7%;
 }
 
 .genderError {
