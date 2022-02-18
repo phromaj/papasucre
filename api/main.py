@@ -55,7 +55,7 @@ def unprotected():
 
 @app.get('/protected')
 def protected(email=Depends(auth_handler.auth_wrapper)):
-    return {'name': email}
+    return {'email': email}
 
 
 @app.get('/users', response_description="List all users", response_model=List[userModel.User])

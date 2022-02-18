@@ -17,10 +17,8 @@ const router = createRouter({
         const auth = useAuthStore();
 
         if (auth.$state.isAuthenticated) {
-          console.log(auth.$state.isAuthenticated)
           return true
         }
-        console.log(auth.$state.isAuthenticated)
 
         return '/signin'
       },
@@ -60,6 +58,16 @@ const router = createRouter({
     {
       path: "/profile",
       name: "profile",
+      beforeEnter: (to, from) => {
+        // reject the navigation
+        const auth = useAuthStore();
+
+        if (auth.$state.isAuthenticated) {
+          return true
+        }
+
+        return '/signin'
+      },
       component: () => import("../views/ProfileView.vue"),
     },
   ],

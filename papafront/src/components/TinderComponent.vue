@@ -70,7 +70,6 @@ export default {
         const store = userFeedStore();
         store.getUserList()
         const userList = store.$state.userList
-        console.log(userList)
         return {
             store,
             userList

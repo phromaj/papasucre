@@ -1,7 +1,3 @@
-<script setup>
-import { Icon } from "@iconify/vue";
-import { RouterLink } from "vue-router";
-</script>
 <template>
     <body>
         <RouterLink to="/feed">
@@ -12,7 +8,7 @@ import { RouterLink } from "vue-router";
         </RouterLink>
         <div class="profileHeader">
             <div class="profilePicture">
-                <img src="" alt="Photo">
+                <img :src="user.profile_picture" alt="Photo">
             </div>
             <div class="counter">
                 <div class="likeCounter">
@@ -32,24 +28,37 @@ import { RouterLink } from "vue-router";
         </div>
         <div class="information">
             <div class="nameAndAge">
-                <span>Name</span><br>
-                <span>Age</span>
+                <span>{{ this.user.name}}</span><br>
+                <span>{{ this.user.age }}</span>
             </div>
             <div id="separator">
 
             </div>
             <div class="jobAndCity">
-                <span>Job</span><br>
-                <span>Location</span>
+                <span>{{ this.user.job }}</span><br>
+                <span>{{ this.user.location }}</span>
             </div>
         </div>
         <div class="description">
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Reprehenderit dicta harum et ipsam architecto molliti</p>
+            <p>{{ this.user.description }}</p>
         </div>
     </body>
 </template>
 <script>
+import { useAuthStore } from "../stores/authStore.js";
+import { Icon } from "@iconify/vue";
+import { RouterLink } from "vue-router";
 export default {
+    setup() {
+        // instancie le store
+        const authStore = useAuthStore();
+        const user = authStore.$state.user
+        console.log(user)
+        return {
+            authStore,
+            user
+        };
+    },
 
 }
 </script>
@@ -97,7 +106,7 @@ export default {
         width: 100%;
         height: 100%;
         border-radius: 100%;
-        
+        object-fit: cover;
     }
     .counter{
         height: 4.5em;

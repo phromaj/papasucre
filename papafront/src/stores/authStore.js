@@ -5,23 +5,23 @@ export const useAuthStore = defineStore({
     id: "authStore",
     state: () => ({
         user: {
-            email: "",
-            password: "",
+         
         },
         token: '',
         isAuthenticated : false,
     }),
 
     actions: {
-        async login() {
+        async login(userForm) {
+            console.log(userForm)
             let result = await axios.post('http://127.0.0.1:8000/user-login', {
-                email: this.user.email,
-                password: this.user.password
+                email: userForm.email,
+                password: userForm.password
             })
             this.token = result['data']['token']
           
         },
-        async authenticate(){
+        async authenticate(user_mail){
             let response = await axios.get('http://127.0.0.1:8000/protected', {
                 headers: {
                     Authorization: `Bearer ${this.token}`
@@ -29,6 +29,9 @@ export const useAuthStore = defineStore({
             })
             if(response.status == 200){
                 this.isAuthenticated = true
+                let user_response = await axios.get('http://127.0.0.1:8000/users/' + user_mail)
+                this.user = user_response.data
+            
             }
             else {
                 this.isAuthenticated = false

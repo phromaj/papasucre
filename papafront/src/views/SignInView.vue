@@ -10,7 +10,7 @@
             type="email"
             name="email"
             class="input emailInput"
-            v-model="mail"
+            v-model="email"
             maxlength="30"
             placeholder="Email"
           />
@@ -62,7 +62,7 @@ export default {
 
   data() {
     return {
-      mail: "",
+      email: "",
       password: "",
       type: "password",
     };
@@ -77,14 +77,20 @@ export default {
       }
     },
     async submitForm() {
-      this.auth.$patch((state) => {
-        (state.user.email = this.mail),
-        (state.user.password = this.password);
-      });
+      let user = {
+        email: this.email,
+        password: this.password,
+      }
       //this.auth.user.email = this.mail
       //this.auth.user.password = this.password
-      await this.auth.login()
-      await this.auth.authenticate()
+      try {
+        await this.auth.login(user)
+        await this.auth.authenticate(user.email)
+
+
+      } catch (error) {
+        alert("Your credentials are invalid")
+      }
       this.$router.push('/feed')
     }
   },
